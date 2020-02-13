@@ -1,2 +1,2 @@
-# websci-group1
+# THWOMP
 Web Systems Science Term Project
