@@ -1,0 +1,24 @@
+{
+  "name": "thwomp",
+  "version": "1.0.0",
+  "description": "Web Systems Science Term Project",
+  "dependencies": {
+    "express": "^4.10.2",
+    "mongoose": "^3.8.24",
+    "bson" : "^0.4.21"
+  },
+  "main": "h_w_picker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evanlazaro/THWOMP.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/evanlazaro/THWOMP/issues"
+  },
+  "homepage": "https://github.com/evanlazaro/THWOMP#readme"
+}
