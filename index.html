@@ -8,11 +8,11 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/index.css"/>
 	<script type="text/javascript" src="js/hw.js"></script>
 </head>
 <body ng-controller="mainController" class="bg-dark">
-	<h1 id="title">THWOMP</h1>
 
 	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 		<a class="navbar-brand" href="#">Navbar</a>
@@ -89,7 +89,7 @@
     app.controller("mainController", ['$scope','$http',function($scope, $http) {
 
         $scope.view = 0;
-		$scope.songs = ['song 1', 'song2'];
+		$scope.songs;
 
     }]);
 </script>
