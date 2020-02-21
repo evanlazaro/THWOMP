@@ -4,8 +4,8 @@
   "description": "Web Systems Science Term Project",
   "dependencies": {
     "express": "^4.10.2",
-    "mongoose": "^3.8.24",
-    "bson" : "^0.4.21"
+    "mongoose": "^5.9.1",
+    "bson": "^0.4.21"
   },
   "main": "h_w_picker.js",
   "scripts": {
