@@ -3,15 +3,15 @@
 	<title>THWOMP</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
-	<link rel="text/css" href="css/index.css"/>
 	<meta charset="utf-8">
 	<!-- Angular, bootstrap, and jquery -->
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/index.css"/>
 	<script type="text/javascript" src="js/hw.js"></script>
 </head>
-<body>
+<body ng-controller="mainController" class="bg-dark">
 	<h1 id="title">THWOMP</h1>
 
 	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -23,7 +23,7 @@
 		<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 		  <ul class="navbar-nav mr-auto">
 			<li class="nav-item active">
-			  <a class="nav-link" ng-init="view=0" ng-click="view=0" href="#">Home <span class="sr-only">(current)</span></a>
+			  <a class="nav-link" ng-click="view=0" href="#">Home <span class="sr-only">(current)</span></a>
 			</li>
 			<li class="nav-item">
 			  <a class="nav-link" ng-click="view=1" href="#">Link</a>
@@ -37,16 +37,21 @@
 	  </nav>
 
 	  <main role="main" ng-show="view==0">
-		<div class="jumbotron">
+		<div class="jumbotron theme">
 		  <div class="container">
-			<h1 id="title" class="display-3">THWOMP</h1>
-			<p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-			<p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+			<h1 id="title" class="display-3 text-dark">THWOMP</h1>
+			<p class="text-dark">This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+			<p><a class="btn btn-link btn-lg" href="#" role="button">Learn more &raquo;</a></p>
 		  </div>
 		</div>
 
 		<div class="container">
 		  <div class="row">
+			<div class="container">
+				<ul class="list-group">
+					<li ng-src={{songs}} ng-repeat="song in songs" class="list-group-item"> {{song}} </li>
+				</ul>
+			</div>
 			<div class="col-md-4">
 			  <h2>Heading</h2>
 			  <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
@@ -84,7 +89,7 @@
     app.controller("mainController", ['$scope','$http',function($scope, $http) {
 
         $scope.view = 0;
-
+		$scope.songs = ['song 1', 'song2'];
 
     }]);
 </script>
