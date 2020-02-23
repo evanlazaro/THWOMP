@@ -14,11 +14,12 @@ var spotifyApi = new SpotifyWebApi({
  clientSecret: process.env.CLIENT_SECRET,
 });
 
+app.use(express.static('public'));
 
 app.get('/', function(req, res){
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile('/index.html');
 });
-app.use(express.static('public'));
+
 
 
 http.listen(3000, function(){
