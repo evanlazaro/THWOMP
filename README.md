@@ -37,5 +37,5 @@ Project can be deployed by running `npm start`
 ## Acknowledgments
 
 * Dr. Callahan
-* The Original (THWOMP)[https://www.mariowiki.com/images/thumb/0/09/ThwompNSMBU.png/200px-ThwompNSMBU.png]
+* The Original [THWOMP](https://www.mariowiki.com/images/thumb/0/09/ThwompNSMBU.png/200px-ThwompNSMBU.png)
 * The Honorable Dr. Shirley Ann Jackson
