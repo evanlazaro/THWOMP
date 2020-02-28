@@ -13,19 +13,17 @@
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:800&display=swap" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="css/index.css"/>
-	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="js/hw.js"></script>
 	<link rel="icon" type="image/png" sizes="16x16" href="favicon.ico">
 </head>
 <body ng-controller="mainController" class="bg-dark">
 
 	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-		<a class="navbar-brand" href="#"><img src="favicon.ico" height="27" width="27"></a>
+		<a class="navbar-brand" href="#">Navbar</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
 		  <span class="navbar-toggler-icon"></span>
 		</button>
-		<form ng-submit="login()">
-			<input type="submit" value="Login">	
-		</form>
+
 		<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 		  <ul class="navbar-nav mr-auto">
 			<li class="nav-item active">
@@ -45,7 +43,9 @@
 	  <main role="main" ng-show="view==0">
 		<div class="jumbotron theme over">
 		  <div class="container">
-			<h1 class="display-3 text-dark">{{thwomp}}</h1>
+			<h1 id="title" class="display-3 text-dark">THWOMP</h1>
+			<p class="text-dark description">This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+			<p><a class="btn btn-link btn-lg description" href="#" role="button">Learn more &raquo;</a></p>
 		  </div>
 		</div>
 
@@ -110,5 +110,15 @@
 
 </body>
 
-<script src="js/index.js"></script>
+<script>
+
+    var app = angular.module("myApp", []);
+
+    app.controller("mainController", ['$scope','$http',function($scope, $http) {
+
+        $scope.view = 0;
+		$scope.songs = [['Song1','artist1','album1','3:58'], ['Song2','artist2','album2','6:56'], ['Song3','artist3','album3','3:48'], ['Song4','artist4','album4','3:58']];
+
+    }]);
+</script>
 </html>

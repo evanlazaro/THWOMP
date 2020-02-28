@@ -5,6 +5,10 @@ html {
 body {
   color: #777777;
 }
+.navbar-brand {
+  margin-left: 6px;
+  margin-right: 9px;
+}
 .bg-dark{
   background-color: #212121 !important;
 }
