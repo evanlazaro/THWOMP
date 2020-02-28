@@ -29,6 +29,9 @@ app.use(express.static('public'));
 app.get('/', function(req, res){
     res.sendFile('/index.html');
 });
+app.get('/authUrl/', function(req, res){
+    res.json({authUrl: authorizeURL});
+})
 // once the user has authorized, it will send a get request to the redirect uri with the auth code
 app.get('/callback', function(req, res){
     // get and set authorization code for this user
@@ -37,17 +40,16 @@ app.get('/callback', function(req, res){
           console.log('The token expires in ' + data.body['expires_in']);
           console.log('The access token is ' + data.body['access_token']);
           console.log('The refresh token is ' + data.body['refresh_token']);
-       
           // Set the access token on the API object to use it in later calls
           spotifyApi.setAccessToken(data.body['access_token']);
           spotifyApi.setRefreshToken(data.body['refresh_token']);
-          res.send(201);
         },
         function(err) {
           console.log('Something went wrong!', err);
-          res.send(301);
         }
-      );
+      ).then(function() {
+        res.redirect('/');
+      });
     
 })
 
