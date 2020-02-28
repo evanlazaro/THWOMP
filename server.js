@@ -3,6 +3,8 @@ var app = require('express')();
 var http = require('http').Server(app);
 var express = require('express');
 var mongoose = require('mongoose');
+var favicon = require('serve-favicon');
+var path = require('path');
 require('dotenv').config()
 
 
@@ -14,13 +16,21 @@ var spotifyApi = new SpotifyWebApi({
  clientSecret: process.env.CLIENT_SECRET,
 });
 
+<<<<<<< Updated upstream
 app.use(express.static('public'));
 
+=======
+>>>>>>> Stashed changes
 app.get('/', function(req, res){
     res.sendFile('/index.html');
 });
+<<<<<<< Updated upstream
 
 
+=======
+app.use(express.static('public'));
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+>>>>>>> Stashed changes
 
 http.listen(3000, function(){
     console.log('Server up on *:3000');
