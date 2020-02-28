@@ -26,5 +26,9 @@ app.controller("mainController", ['$scope','$http',function($scope, $http) {
   $scope.thwomp = getTitle();
 	$scope.view = 0;
 	$scope.songs = [['Song1','artist1','album1','3:58'], ['Song2','artist2','album2','6:56'], ['Song3','artist3','album3','3:48'], ['Song4','artist4','album4','3:58']];
-
+  $scope.login = function(){
+    $http.get("/authUrl/").then(function(data) {
+      window.location = data.data.authUrl;
+    })
+  }
 }]);
