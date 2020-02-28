@@ -16,7 +16,9 @@ var spotifyApi = new SpotifyWebApi({
  clientSecret: process.env.CLIENT_SECRET,
  redirectUri: 'http://localhost:3000/callback'
 });
+// need to change scopes later depending on what data we need from the user
 var scopes = ['user-read-private', 'user-read-email'];
+// need to redirect user to the authorization URL
 var authorizeURL = spotifyApi.createAuthorizeURL(scopes);
 console.log(authorizeURL);
 
@@ -25,7 +27,9 @@ console.log(authorizeURL);
 app.get('/', function(req, res){
     res.sendFile(__dirname + '/index.html');
 });
+// once the user has authorized, it will send a get request to the redirect uri with the auth code
 app.get('/callback', function(req, res){
+    // get and set authorization code for this user
     spotifyApi.authorizationCodeGrant(req.query.code).then(
         function(data) {
           console.log('The token expires in ' + data.body['expires_in']);
@@ -35,11 +39,14 @@ app.get('/callback', function(req, res){
           // Set the access token on the API object to use it in later calls
           spotifyApi.setAccessToken(data.body['access_token']);
           spotifyApi.setRefreshToken(data.body['refresh_token']);
+          res.send(201);
         },
         function(err) {
           console.log('Something went wrong!', err);
+          res.send(301);
         }
       );
+    
 })
 
 http.listen(3000, function(){
