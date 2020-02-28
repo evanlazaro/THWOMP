@@ -6,6 +6,8 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); 
+var favicon = require('serve-favicon');
+var path = require('path');
 require('dotenv').config()
 
 
@@ -53,7 +55,8 @@ app.get('/callback', function(req, res){
     
 })
 
-
+app.use(express.static('public'));
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 http.listen(3000, function(){
     console.log('Server up on *:3000');
