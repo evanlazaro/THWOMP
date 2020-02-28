@@ -1,6 +1,7 @@
 // server init + mods
 var app = require('express')();
 var http = require('http').Server(app);
+var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
@@ -23,9 +24,10 @@ var authorizeURL = spotifyApi.createAuthorizeURL(scopes);
 console.log(authorizeURL);
 
 
+app.use(express.static('public'));
 
 app.get('/', function(req, res){
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile('/index.html');
 });
 // once the user has authorized, it will send a get request to the redirect uri with the auth code
 app.get('/callback', function(req, res){
@@ -48,6 +50,8 @@ app.get('/callback', function(req, res){
       );
     
 })
+
+
 
 http.listen(3000, function(){
     console.log('Server up on *:3000');
