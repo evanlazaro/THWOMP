@@ -102,7 +102,7 @@ h1 {
   margin: 5% auto 15% auto; 
   border: 1px solid #111111;
   width: 80%; 
-  height: 80%;
+  height: auto;
 }
 .close-modal {
   position: absolute;
@@ -119,7 +119,7 @@ h1 {
   cursor: pointer;
 }
 .modal-btn{
-  margin: 5px auto;
+  margin: 25px auto;
   text-align: center;
   width: 150px;
 }
@@ -144,6 +144,12 @@ h4{
 .btn-outline-success{
   color: #1DB954;
   border-color: #1DB954;
+}
+@media only screen and (max-width: 800px) {
+  .col-sm {
+    width: 40vw;
+    flex: none;
+  }
 }
 @keyframes animatezoom {
   from {transform: scale(0)} 
