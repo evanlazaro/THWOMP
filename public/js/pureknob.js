@@ -1102,11 +1102,8 @@ function PureKnob() {
 	};
 	
 }
-
 var pureknob = new PureKnob();
-
 var knob = pureknob.createKnob(100, 100);
-
 // Set properties.
 knob.setProperty('angleStart', -0.75 * Math.PI);
 knob.setProperty('angleEnd', 0.75 * Math.PI);
@@ -1114,10 +1111,8 @@ knob.setProperty('colorFG', '#88ff88');
 knob.setProperty('trackWidth', 0.4);
 knob.setProperty('valMin', 0);
 knob.setProperty('valMax', 100);
-
 // Set initial value.
 knob.setValue(50);
-
 /*
  * Event listener.
  *
@@ -1138,5 +1133,16 @@ knob.addListener(listener);
 var node = knob.node();
 
 // Add it to the DOM.
-var elem = document.getElementById('dial');
-elem.appendChild(node);
+var elem1 = document.getElementById('key');
+elem1.appendChild(node);
+var elem2 = document.getElementById('acousticness');
+elem2.appendChild(node);
+
+var modal = document.getElementById('playlist-editor');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}

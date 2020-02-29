@@ -97,8 +97,71 @@
 			</div>
 		  </div>
 		</div>
+		<button onclick="document.getElementById('playlist-editor').style.display='block'" style="width:auto;">Login</button>
 
-		<div id="dial"></div>
+		<div id="playlist-editor" class="modal">
+  
+			<form class="modal-content animate" ng-submit="editfunction()" method="post">
+			  <div class="close-container">
+				<span onclick="document.getElementById('playlist-editor').style.display='none'" class="close-modal" title="Close Modal">&times;</span>
+			  </div>
+				<div class="row text-center">
+					<div class="col-sm">
+						<h3>Key</h3>
+						<div id="key"></div>
+					</div>
+					<div class="col-sm">
+						<h3>Acousticness</h3>
+						<div id="acousticness"></div>
+					</div>
+					<div class="col-sm">
+						<h3>Danceability</h3>
+						<div id="danceability"></div>
+					</div>
+					<div class="col-sm">
+						<h3>Energy</h3>
+						<div id="energy"></div>
+					</div>
+				</div>
+				<div class="row text-center">
+					<div class="col-sm">
+						<h3>Instrumentalness</h3>
+						<div id="key"></div>
+					</div>
+					<div class="col-sm">
+						<h3>Liveness</h3>
+						<div id="acousticness"></div>
+					</div>
+					<div class="col-sm">
+						<h3>Loudness</h3>
+						<div id="danceability"></div>
+					</div>
+					<div class="col-sm">
+						<h3>Tempo</h3>
+						<div id="energy"></div>
+					</div>
+				</div>
+				<div class="row text-center">
+					<div class="col-sm">
+						<h3>Speechiness</h3>
+						<div id="key"></div>
+					</div>
+					<div class="col-sm">
+						<h3>Valence</h3>
+						<div id="acousticness"></div>
+					</div>
+					<div class="col-sm">
+						<h3>Loudness</h3>
+						<div id="danceability"></div>
+					</div>
+					<div class="col-sm">
+						<h3>Tempo</h3>
+						<div id="energy"></div>
+					</div>
+				</div>
+			</form>
+		  </div>
+
 	  </main>
 
 		<main ng-show="view==1">
