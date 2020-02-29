@@ -81,7 +81,7 @@ h1 {
 
 .close-container {
   text-align: center;
-  margin: 24px 0 24px 0;
+  margin: 24px 0 54px 0;
 }
 
 .modal {
@@ -119,40 +119,36 @@ h1 {
   cursor: pointer;
 }
 .modal-btn{
-  margin: 0 auto;
+  margin: 5px auto;
   text-align: center;
   width: 150px;
 }
 .edit{
   vertical-align: baseline;
 }
+.call{
+  margin: 50px auto;
+}
 .animate {
-  -webkit-animation: animatezoom 0.6s;
   animation: animatezoom 0.6s
 }
-
-@-webkit-keyframes animatezoom {
-  from {-webkit-transform: scale(0)} 
-  to {-webkit-transform: scale(1)}
+h4{
+  font-family: 'Montserrat', ;
+  font-weight: 300;
+  color: white;
+  margin-bottom: 15px;
 }
-  
+.modal-row {
+  margin-bottom: 30px;
+}
+.btn-outline-success{
+  color: #1DB954;
+  border-color: #1DB954;
+}
 @keyframes animatezoom {
   from {transform: scale(0)} 
   to {transform: scale(1)}
 }
-
-/* Change styles for span and cancel button on extra small screens */
-@media screen and (max-width: 300px) {
-  span.psw {
-     display: block;
-     float: none;
-  }
-  .cancelbtn {
-     width: 100%;
-  }
-}
-
-
 
 @keyframes fadeInLeft {
   from {
