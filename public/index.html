@@ -18,7 +18,7 @@
 </head>
 <body ng-controller="mainController" class="bg-dark">
 
-	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" ng-init="user()">
 		<a class="navbar-brand" href="#"><img src="favicon.ico" height="27" width="27"></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
 		  <span class="navbar-toggler-icon"></span>
@@ -32,8 +32,12 @@
 			  <a class="nav-link" ng-click="view=1" href="#">Profile</a>
 			</li>
 		  </ul>
-			<form class="form-inline my-2 my-lg-0" ng-submit="login()">
+			<form class="form-inline my-2 my-lg-0" ng-if="!userInfo" ng-submit="login()">
 				<input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Login">	
+			</form>
+			<span ng-if="userInfo">Welcome {{userInfo.display_name}} </span>
+			<form class="form-inline my-2 my-lg-0" ng-if="userInfo" ng-submit="logout()">
+				<input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Logout">	
 			</form>
 		</div>
 	  </nav>

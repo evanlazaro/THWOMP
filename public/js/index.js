@@ -60,11 +60,17 @@ var app = angular.module("myApp", []);
 app.controller("mainController", ['$scope','$http',function($scope, $http) {
   $scope.thwomp = getTitle();
   $scope.view = 0;
+  $scope.userInfo;
 	$scope.songs = [['Song1','artist1','album1','3:58'], ['Song2','artist2','album2','6:56'], ['Song3','artist3','album3','3:48'], ['Song4','artist4','album4','3:58']];
   $scope.login = function(){
     $http.get("/authUrl/").then(function(data) {
       window.location = data.data.authUrl;
     })
+  }
+  // Log out
+  $scope.logout = function(){
+    $http.get("/logout/");
+    $scope.user();
   }
   $scope.playlist = function(){
     for(var i = 0; i < 12; i++) {
@@ -72,4 +78,12 @@ app.controller("mainController", ['$scope','$http',function($scope, $http) {
     }
     console.log(dial_settings);
   }
+  // Get information about current user
+  $scope.user = function(){
+    $http.get("/userInfo/").then(function(data) {
+      return data.data.user;
+    }).then( function(result){
+      $scope.userInfo = result;
+    })
+  } 
 }]);
