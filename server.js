@@ -55,6 +55,24 @@ app.get('/callback', function(req, res){
     
 })
 
+// Returns JSON data about user
+app.get('/userInfo/', function(req, res){
+    spotifyApi.getMe().then(function(data) {
+      return data.body
+    }, function(err) {
+      return null;
+    }).then( function(result){
+      res.json( { user: result } );
+    });
+})
+
+// Logout
+app.get('/logout/', function(req, res){
+  spotifyApi.resetAccessToken();
+  spotifyApi.resetRefreshToken();
+  res.redirect('/');
+})
+
 app.use(express.static('public'));
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
