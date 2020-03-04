@@ -23,8 +23,8 @@ var spotifyApi = new SpotifyWebApi({
 var scopes = ['user-read-private', 'user-read-email'];
 // need to redirect user to the authorization URL
 var authorizeURL = spotifyApi.createAuthorizeURL(scopes);
-console.log(authorizeURL);
-
+console.log("Authorization URL: ", authorizeURL);
+var displayName = "";
 
 app.use(express.static('public'));
 
@@ -50,9 +50,17 @@ app.get('/callback', function(req, res){
           console.log('Something went wrong!', err);
         }
       ).then(function() {
+        spotifyApi.getMe().then(
+          function(data) {
+            displayName = data.body.display_name;
+          }
+        )
+      }).then(function() {
         res.redirect('/');
-      });
-    
+      });  
+})
+app.get('/displayname', function(req, res){
+  res.json({displayName: displayName});
 })
 
 app.use(express.static('public'));
