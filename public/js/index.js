@@ -12,7 +12,7 @@ function getTitle(scope){
     success: function(result) {
       jq.each(result,function(){
         json = this;
-        h = this.h[Math.floor(Math.random() * json.w.length)];
+        h = this.h[Math.floor(Math.random() * json.h.length)];
         w = this.w[Math.floor(Math.random() * json.w.length)];
         thwomp = "The " +h.charAt(0).toUpperCase() + h.slice(1) + " " +w.charAt(0).toUpperCase() + w.slice(1) + " and Obscure Music Picker!";
       });
