@@ -57,11 +57,14 @@ window.onclick = function(event) {
 
 var app = angular.module("myApp", []);
 
-app.controller("mainController", ['$scope','$http',function($scope, $http) {
+app.controller("mainController", ['$scope','$http','$sce', function($scope, $http, $sce) {
   $scope.thwomp = getTitle();
   $scope.view = 0;
   $scope.userInfo;
-	$scope.songs = [['Song1','artist1','album1','3:58'], ['Song2','artist2','album2','6:56'], ['Song3','artist3','album3','3:48'], ['Song4','artist4','album4','3:58']];
+  $scope.songs = [['i','artist1','album1','3:58',$sce.trustAsHtml('<iframe src="https://open.spotify.com/embed/track/3ODXRUPL44f04cCacwiCLC" width="80" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>')],
+                  ['Runaway','artist2','album2','6:56',$sce.trustAsHtml('<iframe src="https://open.spotify.com/embed/track/3DK6m7It6Pw857FcQftMds" width="80" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>')],
+                  ['Heartless','artist3','album3','3:48',$sce.trustAsHtml('<iframe src="https://open.spotify.com/embed/track/4EWCNWgDS8707fNSZ1oaA5" width="80" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>')],
+                  ['Scared of the Dark','artist4','album4','3:58',$sce.trustAsHtml('<iframe src="https://open.spotify.com/embed/track/3vWzyGTu6Ovo1GdrcJqH6e" width="80" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>')]];
   $scope.login = function(){
     $http.get("/authUrl/").then(function(data) {
       window.location = data.data.authUrl;

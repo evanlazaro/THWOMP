@@ -55,7 +55,11 @@ h1 {
 .playlist h3{
   font-family: 'Montserrat', ;
   font-weight: 300;
+  margin-top:28px;
   font-size: 1em;
+}
+#play{
+  margin-left: 10%;
 }
 .head h3{
   font-family: 'Montserrat', ;

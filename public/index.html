@@ -65,8 +65,8 @@
 			  </div>
 			  <div class="container">
 				<div class="row text-light playlist head">
-					<div class="col-">
-						<h3>#</h3>
+					<div class="col-sm">
+						<h3 id="play">PLAY</h3>
 					</div>
 					<div class="col-sm">
 						<h3> TITLE</h3>
@@ -82,8 +82,8 @@
 					</div>
 			    </div>
 				<div ng-repeat="song in songs" class="row text-light playlist">
-					<div class="col-">
-						<h3>{{$index+1}}</h3>
+					<div class="col-sm">
+						<div ng-bind-html="song[4]"></div>
 					</div>
 					<div class="col-sm">
 						<h3> {{song[0]}} </h3>
@@ -221,7 +221,6 @@
 
 
 </body>
-
 <script src="js/pureknob.js"></script>
 <script src="js/index.js"></script>
 </html>
