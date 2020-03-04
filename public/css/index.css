@@ -5,6 +5,10 @@ html {
 body {
   color: #777777;
 }
+.navbar-brand {
+  margin-left: 6px;
+  margin-right: 9px;
+}
 .bg-dark{
   background-color: #212121 !important;
 }
@@ -51,7 +55,11 @@ h1 {
 .playlist h3{
   font-family: 'Montserrat', ;
   font-weight: 300;
+  margin-top:28px;
   font-size: 1em;
+}
+#play{
+  margin-left: 10%;
 }
 .head h3{
   font-family: 'Montserrat', ;
@@ -71,6 +79,85 @@ h1 {
   font-family: 'Montserrat', ;
   font-size: 3em;
   font-weight: 800;
+}
+
+/* function editor overlay */
+
+.close-container {
+  text-align: center;
+  margin: 24px 0 54px 0;
+}
+
+.modal {
+  display: none; 
+  position: fixed;
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4); 
+  padding-top: 60px;
+}
+.modal-content {
+  background-color: #333333;
+  margin: 5% auto 15% auto; 
+  border: 1px solid #111111;
+  width: 80%; 
+  height: auto;
+}
+.close-modal {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #96e6a1;
+  font-size: 35px;
+  opacity: 1;
+  font-weight: bold;
+}
+.close-modal:hover,
+.close-modal:focus {
+  color: red;
+  cursor: pointer;
+}
+.modal-btn{
+  margin: 25px auto;
+  text-align: center;
+  width: 150px;
+}
+.edit{
+  vertical-align: baseline;
+}
+.call{
+  margin: 50px auto;
+}
+.animate {
+  animation: animatezoom 0.6s
+}
+h4{
+  font-family: 'Montserrat', ;
+  font-weight: 300;
+  color: white;
+  margin-bottom: 15px;
+}
+.modal-row {
+  margin-bottom: 30px;
+}
+.btn-outline-success{
+  color: #1DB954;
+  border-color: #1DB954;
+}
+@media only screen and (max-width: 800px) {
+  .col-sm {
+    width: 40vw;
+    flex: none;
+  }
+}
+@keyframes animatezoom {
+  from {transform: scale(0)} 
+  to {transform: scale(1)}
 }
 
 @keyframes fadeInLeft {
