@@ -14,7 +14,7 @@ function getTitle(scope){
         json = this;
         h = this.h[Math.floor(Math.random() * json.w.length)];
         w = this.w[Math.floor(Math.random() * json.w.length)];
-        thwomp = "The " +h+ " " +w+ " and Obscure Music Picker!";
+        thwomp = "The " +h.charAt(0).toUpperCase() + h.slice(1) + " " +w.charAt(0).toUpperCase() + w.slice(1) + " and Obscure Music Picker!";
       });
     }
   });
@@ -36,10 +36,10 @@ for(var i = 0; i < 12; i++){
 	// Set initial value.
   knob.setValue(50);
   knobs.push(knob);
-	
+
 	// Create element node.
 	var node = knob.node();
-	
+
 	// Add it to the DOM.
 	var elem1 = document.getElementById('dial'+(i+1));
   elem1.appendChild(node);
