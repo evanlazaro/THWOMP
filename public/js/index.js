@@ -88,5 +88,12 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
     }).then( function(result){
       $scope.userInfo = result;
     })
+  }
+  // need to call refreshPlaylist somewhere on the frontend automatically
+  $scope.refreshPlaylist = function() {
+    $http.get("/firstPlaylist").then(function(data) {
+      // do something with the tracks
+      // data.data.songs[index].track.uri to get the uri
+    })
   } 
 }]);
