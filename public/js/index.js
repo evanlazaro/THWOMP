@@ -88,5 +88,5 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
     }).then( function(result){
       $scope.userInfo = result;
     })
-  } 
+  }
 }]);
