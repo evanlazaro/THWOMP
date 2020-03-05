@@ -72,6 +72,21 @@ app.get('/logout/', function(req, res){
   res.redirect('/');
 });
 
+app.get('/firstPlaylist', function(req, res) {
+  spotifyApi.getUserPlaylists().then(
+    function(data) {
+      console.log("playlist id: ", data.body.items[0].id);
+      var playlistId = data.body.items[0].id;
+      spotifyApi.getPlaylistTracks(playlistId).then(function(data) {
+        res.json({songs: data.body.items});
+      })
+    },
+    function(err) {
+      console.log(err);
+    }
+  )
+})
+
 app.use(express.static('public'));
 
 http.listen(3000, function(){
