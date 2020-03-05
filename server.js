@@ -77,8 +77,9 @@ app.get('/firstPlaylist', function(req, res) {
     function(data) {
       console.log("playlist id: ", data.body.items[0].id);
       var playlistId = data.body.items[0].id;
-      spotifyApi.getPlaylistTracks(playlistId).then(function(data) {
-        res.json({songs: data.body.items});
+      spotifyApi.getPlaylist(playlistId).then(function(data) {
+        console.log(data);
+        res.json({songs: data});
       })
     },
     function(err) {
