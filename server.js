@@ -5,10 +5,9 @@ var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true })); 
-var favicon = require('serve-favicon');
+app.use(bodyParser.urlencoded({ extended: true }));
 var path = require('path');
-require('dotenv').config()
+require('dotenv').config();
 
 
 // initialize spotify api
@@ -33,18 +32,18 @@ app.get('/', function(req, res){
 });
 app.get('/authUrl/', function(req, res){
     res.json({authUrl: authorizeURL});
-})
+});
 // once the user has authorized, it will send a get request to the redirect uri with the auth code
 app.get('/callback', function(req, res){
     // get and set authorization code for this user
     spotifyApi.authorizationCodeGrant(req.query.code).then(
         function(data) {
-          console.log('The token expires in ' + data.body['expires_in']);
-          console.log('The access token is ' + data.body['access_token']);
-          console.log('The refresh token is ' + data.body['refresh_token']);
+          console.log('The token expires in ' + data.body.expires_in);
+          console.log('The access token is ' + data.body.access_token);
+          console.log('The refresh token is ' + data.body.refresh_token);
           // Set the access token on the API object to use it in later calls
-          spotifyApi.setAccessToken(data.body['access_token']);
-          spotifyApi.setRefreshToken(data.body['refresh_token']);
+          spotifyApi.setAccessToken(data.body.access_token);
+          spotifyApi.setRefreshToken(data.body.refresh_token);
         },
         function(err) {
           console.log('Something went wrong!', err);
@@ -52,26 +51,26 @@ app.get('/callback', function(req, res){
       ).then(function() {
         res.redirect('/');
       });
-    
-})
+
+});
 
 // Returns JSON data about user
 app.get('/userInfo/', function(req, res){
     spotifyApi.getMe().then(function(data) {
-      return data.body
+      return data.body;
     }, function(err) {
       return null;
     }).then( function(result){
       res.json( { user: result } );
     });
-})
+});
 
 // Logout
 app.get('/logout/', function(req, res){
   spotifyApi.resetAccessToken();
   spotifyApi.resetRefreshToken();
   res.redirect('/');
-})
+});
 
 app.get('/firstPlaylist', function(req, res) {
   spotifyApi.getUserPlaylists().then(
@@ -89,7 +88,6 @@ app.get('/firstPlaylist', function(req, res) {
 })
 
 app.use(express.static('public'));
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 http.listen(3000, function(){
     console.log('Server up on *:3000');
