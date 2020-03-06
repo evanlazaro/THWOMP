@@ -1025,7 +1025,7 @@ function PureKnob() {
 			
 			/*
 			 * If knob is not read only, process mouse wheel event.
-			 */
+			*/
 			if (!readonly) {
 				e.preventDefault();
 				var delta = e.deltaY;
@@ -1047,7 +1047,7 @@ function PureKnob() {
 				knob._timeout = timeout;
 			}
 			
-		};
+		}; 
 		
 		/*
 		 * This is called when the user presses a key on the keyboard.
