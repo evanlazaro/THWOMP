@@ -29,7 +29,7 @@ h1 {
   background-repeat: repeat-x;
   background-size: 100% 100%;
   border-radius: 0;
-  height: 50vh;
+  height: auto;
 }
 .description {
   animation: fadeIn 2.5s 1;
