@@ -141,6 +141,7 @@ h4{
   font-weight: 300;
   color: white;
   margin-bottom: 15px;
+  padding-left: 13px;
 }
 .modal-row {
   margin-bottom: 30px;
@@ -148,6 +149,44 @@ h4{
 .btn-outline-success{
   color: #1DB954;
   border-color: #1DB954;
+}
+.tooltip_ {
+  font-family: 'Montserrat', ;
+  font-weight: 300;
+  font-size: .6em;
+  position: relative;
+  display: inline-block;
+}
+.tooltip_ .tooltiptext {
+  font-weight: 300;
+  visibility: hidden;
+  background-color: white;
+  color: black;
+  text-align: center;
+  border-radius: 6px;
+  padding: 12px;
+
+  /* Position the tooltip */
+  position: absolute;
+  width: 300px;
+  bottom: 100%;
+  margin-bottom: 5px;
+  left: 50%;
+  margin-left: -150px;
+  z-index: 1;
+}
+.tooltip_:hover .tooltiptext {
+  visibility: visible;
+}
+.tooltip_ .tooltiptext::after {
+  content: " ";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: white transparent transparent transparent;
 }
 @media only screen and (max-width: 800px) {
   .col-sm {
