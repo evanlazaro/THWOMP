@@ -19,7 +19,7 @@
 </head>
 <body ng-controller="mainController" class="bg-dark">
 
-	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" ng-init="user();refreshPlaylist()">
+	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" ng-init="user();refreshPlaylist();getWeather()">
 		<a class="navbar-brand" href="#"><img src="favicon.ico" height="27" width="27"></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
 		  <span class="navbar-toggler-icon"></span>
@@ -27,7 +27,7 @@
 		<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 		  <ul class="navbar-nav mr-auto">
 			<li class="nav-item active">
-			  <a class="nav-link" ng-click="view=0" href="#">Home <span class="sr-only">(current)</span></a>
+			  <a class="nav-link" ng-click="view=0" href="#">Home</a>
 			</li>
 			<li class="nav-item">
 			  <a class="nav-link" ng-click="view=1" href="#">Profile</a>

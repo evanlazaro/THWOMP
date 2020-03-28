@@ -128,5 +128,10 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
       }
       $scope.playlistDuration = msToHMS(dur);
     })
+  }
+  $scope.getWeather = function() {
+    $http.get("/weather").then(function(data) {
+      console.log(data);
+    })
   } 
 }]);
