@@ -30,9 +30,20 @@ for(var i = 0; i < 12; i++){
 	knob.setProperty('angleStart', -0.75 * Math.PI);
 	knob.setProperty('angleEnd', 0.75 * Math.PI);
 	knob.setProperty('colorFG', '#88ff88');
-	knob.setProperty('trackWidth', 0.4);
-	knob.setProperty('valMin', 0);
-	knob.setProperty('valMax', 100);
+  knob.setProperty('trackWidth', 0.4);
+  if(i == 0) {
+    knob.setProperty('valMin', 0);
+    knob.setProperty('valMax', 24);
+  } else if(i==6){
+    knob.setProperty('valMin', -60);
+    knob.setProperty('valMax', 0);
+  } else if(i==2){
+    knob.setProperty('valMin', 0);
+    knob.setProperty('valMax', 220);
+  }else {
+    knob.setProperty('valMin', 0);
+    knob.setProperty('valMax', 100);
+  }
 	// Set initial value.
   knob.setValue(50);
   knobs.push(knob);
@@ -151,5 +162,21 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
       $scope.weather.push("http://openweathermap.org/img/wn/"+data.data.weather.weather[0].icon+"@2x.png");
       console.log(data.data.weather);
     })
+  }
+  $scope.setKnob = function(i, val) {
+    knobs[i].setValue(val);
+    dial_settings[i] = val;
+  }
+  $scope.setKnobs = function() {
+    $scope.setKnob(0,14);
+    $scope.setKnob(2, 120);
+    $scope.setKnob(4, 5);
+    $scope.setKnob(5, 15);
+    $scope.setKnob(6, -5);
+    $scope.setKnob(7, 76);
+    $scope.setKnob(8, 5);
+    $scope.setKnob(9, 60);
+    $scope.setKnob(10, 70);
+    $scope.setKnob(11, 10);
   }
 }]);
