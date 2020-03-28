@@ -45,14 +45,6 @@ for(var i = 0; i < 12; i++){
   elem1.appendChild(node);
   dial_settings.push(50);
 }
-var modal = document.getElementById('playlist-editor');
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
 function msToHMS( ms ) {
   // 1- Convert to seconds:
   var seconds = ms / 1000;
@@ -68,7 +60,8 @@ function msToHMS( ms ) {
   else
     return ( minutes+":"+parseInt(seconds) );
 }
-var clocl = document.getElementById('clock');
+var clock = document.getElementById('clock');
+var clock2 = document.getElementById('clock2');
 
 function time() {
   var d = new Date();
@@ -78,7 +71,11 @@ function time() {
   if(s < 10) {
     s = "0"+s;
   }
+  if(m < 10) {
+    m = "0"+m;
+  }
   clock.textContent = h + ":" + m + ":" + s;
+  clock2.textContent = h + ":" + m + ":" + s;
 }
 
 setInterval(time, 1000);
@@ -88,6 +85,7 @@ var app = angular.module("myApp", []);
 app.controller("mainController", ['$scope','$http','$sce', function($scope, $http, $sce) {
   $scope.thwomp = getTitle();
   $scope.view = 0;
+  $scope.weather_view = 0;
   $scope.userInfo;
   $scope.playlistName = "Please Log in";
   $scope.playlistCreator = "username";
@@ -126,6 +124,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
     $http.get("/firstPlaylist").then(function(data) {
       // do something with the tracks
       console.log(data)
+      $scope.weather_view = 0;
       $scope.playlistName = data.data.songs.body.name;
       $scope.playlistCreator = data.data.songs.body.owner.display_name;
       $scope.playlistImg = data.data.songs.body.images[1].url;
@@ -149,7 +148,8 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
       $scope.weather = [];
       $scope.weather.push(data.data.weather.main.temp);
       $scope.weather.push("http://openweathermap.org/img/wn/"+data.data.weather.weather[0].icon+".png");
+      $scope.weather.push("http://openweathermap.org/img/wn/"+data.data.weather.weather[0].icon+"@2x.png");
       console.log(data.data.weather);
     })
-  } 
+  }
 }]);

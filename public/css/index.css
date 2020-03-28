@@ -88,7 +88,7 @@ h1 {
 
 .close-container {
   text-align: center;
-  margin: 24px 0 54px 0;
+  margin: 24px 0 0 0;
 }
 
 .modal {
@@ -199,6 +199,15 @@ h4{
 }
 h3.weather-element{
   vertical-align: sub;
+}
+.modal-weather{
+  margin-top: 25px;
+}
+.modal-element{
+  font-size: 2.4em;
+  color: white;
+  font-weight: 100;
+  vertical-align: -webkit-baseline-middle!important;
 }
 @media only screen and (max-width: 800px) {
   .col-sm {

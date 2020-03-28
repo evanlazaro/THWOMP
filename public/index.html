@@ -34,9 +34,9 @@
 			</li>
 			</ul>
 			<div class="nav-weather">
-				<h3 class="weather-element">{{weather[0]}}&deg;</h3>
-				<img class="weather-element" src={{weather[1]}}>
-				<h3 class="weather-element" id="clock"></h3>
+				<h3 class="weather-element" ng-show="weather_view==0">{{weather[0]}}&deg;</h3>
+				<img class="weather-element" ng-show="weather_view==0" src={{weather[1]}}>
+				<h3 class="weather-element" ng-show="weather_view==0" id="clock"></h3>
 			</div>
 			<form class="form-inline my-2 my-lg-0" ng-if="!userInfo" ng-submit="login()">
 				<input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Login">
@@ -52,7 +52,7 @@
 		<div class="jumbotron theme over">
 		  <div class="container">
 			<h1 class="display-3 text-dark">{{thwomp}}</h1>
-			<button class="btn btn-link text-center call" onclick="document.getElementById('playlist-editor').style.display='block'" style="width:auto;">Create Playlist! &raquo;</button>
+			<button class="btn btn-link text-center call" ng-click="weather_view=1" onclick="document.getElementById('playlist-editor').style.display='block'" style="width:auto;">Create Playlist! &raquo;</button>
 		  </div>
 		</div>
 
@@ -66,7 +66,7 @@
 					  <h4 class="playlist-accent">PLAYLIST</h4>
 					  <h2 class="playlist-title">{{playlistName}}</h2>
 					  <p class="playlist-description">{{playlistDescription}}</p>
-					  <p class="playlist-description">Created by {{playlistCreator}} &middot; {{songs.length}} songs, {{playlistDuration}}  <button class="btn btn-link edit" onclick="document.getElementById('playlist-editor').style.display='block'" style="width:auto;">Edit &raquo;</button></p>
+					  <p class="playlist-description">Created by {{playlistCreator}} &middot; {{songs.length}} songs, {{playlistDuration}}  <button class="btn btn-link edit" ng-show="weather_view==1" onclick="document.getElementById('playlist-editor').style.display='block'" style="width:auto;">Edit &raquo;</button></p>
 				  </div>
 			  </div>
 			  <div class="container">
@@ -110,10 +110,14 @@
 		</div>
 
 		<div id="playlist-editor" class="modal">
-
 			<form class="modal-content animate" ng-submit="playlist()" method="post">
+				<div class="nav-weather modal-weather">
+					<h3 class="weather-element modal-element">{{weather[0]}}&deg;</h3>
+					<img class="weather-element" src={{weather[2]}}>
+					<h3 class="weather-element modal-element" id="clock2"></h3>
+				</div>
 			  <div class="close-container">
-				<span onclick="document.getElementById('playlist-editor').style.display='none'" class="close-modal" title="Close Modal">&times;</span>
+				<span ng-click="weather_view=0" onclick="document.getElementById('playlist-editor').style.display='none'" class="close-modal" title="Close Modal">&times;</span>
 			  </div>
 				<div class="row modal-row text-center">
 					<div class="col-sm">
@@ -169,7 +173,7 @@
 						<div id="dial12"></div>
 					</div>
 				</div>
-				<input class="btn btn-outline-success modal-btn" type="submit" value="Create Playlist!">
+				<input class="btn btn-outline-success modal-btn" type="submit" value="Create Playlist!" ng-click="weather_view=0;">
 			</form>
 		  </div>
 
