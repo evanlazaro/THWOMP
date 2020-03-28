@@ -188,6 +188,9 @@ h4{
   border-style: solid;
   border-color: white transparent transparent transparent;
 }
+.nav-weather{
+  margin-left: calc(50% - 200px);
+}
 @media only screen and (max-width: 800px) {
   .col-sm {
     width: 40vw;

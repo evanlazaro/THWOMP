@@ -81,6 +81,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
   $scope.playlistDescription = "Playlist description";
   $scope.playlistDuration = "0 hr 0 min";
   $scope.songs = [];
+  $scope.temp= " ";
   $scope.login = function(){
     $http.get("/authUrl/").then(function(data) {
       window.location = data.data.authUrl;
@@ -131,7 +132,8 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
   }
   $scope.getWeather = function() {
     $http.get("/weather").then(function(data) {
-      console.log(data);
+      $scope.temp = data.data.weather.main.temp;
+      console.log(data.data.weather);
     })
   } 
 }]);
