@@ -5,6 +5,9 @@ html {
 body {
   color: #777777;
 }
+nav{
+  box-shadow: 0 2px 4px rgba(0,0,0,.08);
+}
 .navbar-brand {
   margin-left: 6px;
   margin-right: 9px;
@@ -29,7 +32,7 @@ h1 {
   background-repeat: repeat-x;
   background-size: 100% 100%;
   border-radius: 0;
-  height: 50vh;
+  height: auto;
 }
 .description {
   animation: fadeIn 2.5s 1;
@@ -85,7 +88,7 @@ h1 {
 
 .close-container {
   text-align: center;
-  margin: 24px 0 54px 0;
+  margin: 24px 0 0 0;
 }
 
 .modal {
@@ -141,6 +144,7 @@ h4{
   font-weight: 300;
   color: white;
   margin-bottom: 15px;
+  padding-left: 13px;
 }
 .modal-row {
   margin-bottom: 30px;
@@ -148,6 +152,62 @@ h4{
 .btn-outline-success{
   color: #1DB954;
   border-color: #1DB954;
+}
+.tooltip_ {
+  font-family: 'Montserrat', ;
+  font-weight: 300;
+  font-size: .6em;
+  position: relative;
+  display: inline-block;
+}
+.tooltip_ .tooltiptext {
+  font-weight: 300;
+  visibility: hidden;
+  background-color: white;
+  color: black;
+  text-align: center;
+  border-radius: 6px;
+  padding: 12px;
+
+  /* Position the tooltip */
+  position: absolute;
+  width: 300px;
+  bottom: 100%;
+  margin-bottom: 5px;
+  left: 50%;
+  margin-left: -150px;
+  z-index: 1;
+}
+.tooltip_:hover .tooltiptext {
+  visibility: visible;
+}
+.tooltip_ .tooltiptext::after {
+  content: " ";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: white transparent transparent transparent;
+}
+.nav-weather{
+  margin: 0 auto;
+}
+.weather-element{
+  display: inline-block;
+}
+h3.weather-element{
+  vertical-align: sub;
+}
+.modal-weather{
+  margin-top: 25px;
+}
+.modal-element{
+  font-size: 2.4em;
+  color: white;
+  font-weight: 100;
+  vertical-align: -webkit-baseline-middle!important;
 }
 @media only screen and (max-width: 800px) {
   .col-sm {

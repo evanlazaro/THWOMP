@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 var path = require('path');
+var weather = require('openweather-apis');
+weather.setLang('en');
 require('dotenv').config();
 
 
@@ -86,6 +88,26 @@ app.get('/firstPlaylist', function(req, res) {
       console.log(err);
     }
   )
+})
+
+app.get('/weather' , function(req, res) {
+    weather.setAPPID(process.env.OPEN_KEY);
+    // set city by name
+    weather.setCity('Fairplay');
+  	// or set the coordinates (latitude,longitude)
+    weather.setCoordinate(50.0467656, 20.0048731);
+    // or set city by ID (recommended by OpenWeatherMap)
+    weather.setCityId(4367872);
+ 
+    // or set zip code
+    weather.setZipCode(33615);
+ 
+    // 'metric'  'internal'  'imperial'
+     weather.setUnits('metric');
+     weather.getAllWeather(function(err, JSONObj){
+      console.log(JSONObj);
+      res.json({weather: JSONObj})
+  });
 })
 
 app.use(express.static('public'));

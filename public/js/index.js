@@ -30,9 +30,20 @@ for(var i = 0; i < 12; i++){
 	knob.setProperty('angleStart', -0.75 * Math.PI);
 	knob.setProperty('angleEnd', 0.75 * Math.PI);
 	knob.setProperty('colorFG', '#88ff88');
-	knob.setProperty('trackWidth', 0.4);
-	knob.setProperty('valMin', 0);
-	knob.setProperty('valMax', 100);
+  knob.setProperty('trackWidth', 0.4);
+  if(i == 0) {
+    knob.setProperty('valMin', 0);
+    knob.setProperty('valMax', 24);
+  } else if(i==6){
+    knob.setProperty('valMin', -60);
+    knob.setProperty('valMax', 0);
+  } else if(i==2){
+    knob.setProperty('valMin', 0);
+    knob.setProperty('valMax', 220);
+  }else {
+    knob.setProperty('valMin', 0);
+    knob.setProperty('valMax', 100);
+  }
 	// Set initial value.
   knob.setValue(50);
   knobs.push(knob);
@@ -44,14 +55,6 @@ for(var i = 0; i < 12; i++){
 	var elem1 = document.getElementById('dial'+(i+1));
   elem1.appendChild(node);
   dial_settings.push(50);
-}
-var modal = document.getElementById('playlist-editor');
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
 }
 function msToHMS( ms ) {
   // 1- Convert to seconds:
@@ -68,22 +71,40 @@ function msToHMS( ms ) {
   else
     return ( minutes+":"+parseInt(seconds) );
 }
+var clock = document.getElementById('clock');
+var clock2 = document.getElementById('clock2');
+
+function time() {
+  var d = new Date();
+  var s = d.getSeconds();
+  var m = d.getMinutes();
+  var h = d.getHours()%12;
+  if(s < 10) {
+    s = "0"+s;
+  }
+  if(m < 10) {
+    m = "0"+m;
+  }
+  clock.textContent = h + ":" + m + ":" + s;
+  clock2.textContent = h + ":" + m + ":" + s;
+}
+
+setInterval(time, 1000);
 
 var app = angular.module("myApp", []);
 
 app.controller("mainController", ['$scope','$http','$sce', function($scope, $http, $sce) {
   $scope.thwomp = getTitle();
   $scope.view = 0;
+  $scope.weather_view = 0;
   $scope.userInfo;
   $scope.playlistName = "Please Log in";
   $scope.playlistCreator = "username";
   $scope.playlistImg = "https://cdn3.iconfinder.com/data/icons/smileys-people-smiley-essential/48/v-51-512.png";
   $scope.playlistDescription = "Playlist description";
   $scope.playlistDuration = "0 hr 0 min";
-  $scope.songs = [];/* = [['i','artist1','album1','3:58',$sce.trustAsHtml('<iframe src="https://open.spotify.com/embed/track/3E687eTpzefumVRX9Wfirs" width="80" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>')],
-                  ['Runaway','artist2','album2','6:56',$sce.trustAsHtml('<iframe src="https://open.spotify.com/embed/track/3DK6m7It6Pw857FcQftMds" width="80" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>')],
-                  ['Heartless','artist3','album3','3:48',$sce.trustAsHtml('<iframe src="https://open.spotify.com/embed/track/4EWCNWgDS8707fNSZ1oaA5" width="80" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>')],
-                  ['Scared of the Dark','artist4','album4','3:58',$sce.trustAsHtml('<iframe src="https://open.spotify.com/embed/track/3vWzyGTu6Ovo1GdrcJqH6e" width="80" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>')]];*/
+  $scope.songs = [];
+  $scope.weather = ['',''];
   $scope.login = function(){
     $http.get("/authUrl/").then(function(data) {
       window.location = data.data.authUrl;
@@ -114,6 +135,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
     $http.get("/firstPlaylist").then(function(data) {
       // do something with the tracks
       console.log(data)
+      $scope.weather_view = 0;
       $scope.playlistName = data.data.songs.body.name;
       $scope.playlistCreator = data.data.songs.body.owner.display_name;
       $scope.playlistImg = data.data.songs.body.images[1].url;
@@ -131,5 +153,30 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
       }
       $scope.playlistDuration = msToHMS(dur);
     })
-  } 
+  }
+  $scope.getWeather = function() {
+    $http.get("/weather").then(function(data) {
+      $scope.weather = [];
+      $scope.weather.push(data.data.weather.main.temp);
+      $scope.weather.push("http://openweathermap.org/img/wn/"+data.data.weather.weather[0].icon+".png");
+      $scope.weather.push("http://openweathermap.org/img/wn/"+data.data.weather.weather[0].icon+"@2x.png");
+      console.log(data.data.weather);
+    })
+  }
+  $scope.setKnob = function(i, val) {
+    knobs[i].setValue(val);
+    dial_settings[i] = val;
+  }
+  $scope.setKnobs = function() {
+    $scope.setKnob(0,14);
+    $scope.setKnob(2, 120);
+    $scope.setKnob(4, 5);
+    $scope.setKnob(5, 15);
+    $scope.setKnob(6, -5);
+    $scope.setKnob(7, 76);
+    $scope.setKnob(8, 5);
+    $scope.setKnob(9, 60);
+    $scope.setKnob(10, 70);
+    $scope.setKnob(11, 10);
+  }
 }]);
