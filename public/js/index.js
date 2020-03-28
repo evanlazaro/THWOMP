@@ -68,14 +68,17 @@ function msToHMS( ms ) {
   else
     return ( minutes+":"+parseInt(seconds) );
 }
-var span = document.getElementById('clock');
+var clocl = document.getElementById('clock');
 
 function time() {
   var d = new Date();
   var s = d.getSeconds();
   var m = d.getMinutes();
   var h = d.getHours()%12;
-  span.textContent = h + ":" + m + ":" + s;
+  if(s < 10) {
+    s = "0"+s;
+  }
+  clock.textContent = h + ":" + m + ":" + s;
 }
 
 setInterval(time, 1000);
