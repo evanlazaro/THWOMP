@@ -33,8 +33,10 @@
 			  <a class="nav-link" ng-click="view=1" href="#">Profile</a>
 			</li>
 			</ul>
-			
-			<h3 class="nav-weather mr-auto">{{temp}}&deg;</h3>
+			<div class="nav-weather">
+				<h3 class="weather-element">{{weather[0]}}&deg;</h3>
+				<img class="weather-element" src={{weather[1]}}>
+			</div>
 			<form class="form-inline my-2 my-lg-0" ng-if="!userInfo" ng-submit="login()">
 				<input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Login">
 			</form>

@@ -189,7 +189,13 @@ h4{
   border-color: white transparent transparent transparent;
 }
 .nav-weather{
-  margin-left: calc(50% - 200px);
+  margin: 0 auto;
+}
+.weather-element{
+  display: inline-block;
+}
+h3.weather-element{
+  vertical-align: sub;
 }
 @media only screen and (max-width: 800px) {
   .col-sm {

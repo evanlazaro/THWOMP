@@ -81,7 +81,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
   $scope.playlistDescription = "Playlist description";
   $scope.playlistDuration = "0 hr 0 min";
   $scope.songs = [];
-  $scope.temp= " ";
+  $scope.weather = ['',''];
   $scope.login = function(){
     $http.get("/authUrl/").then(function(data) {
       window.location = data.data.authUrl;
@@ -132,7 +132,9 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
   }
   $scope.getWeather = function() {
     $http.get("/weather").then(function(data) {
-      $scope.temp = data.data.weather.main.temp;
+      $scope.weather = [];
+      $scope.weather.push(data.data.weather.main.temp);
+      $scope.weather.push("http://openweathermap.org/img/wn/"+data.data.weather.weather[0].icon+".png");
       console.log(data.data.weather);
     })
   } 
