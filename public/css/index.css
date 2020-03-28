@@ -5,6 +5,9 @@ html {
 body {
   color: #777777;
 }
+nav{
+  box-shadow: 0 2px 4px rgba(0,0,0,.08);
+}
 .navbar-brand {
   margin-left: 6px;
   margin-right: 9px;
