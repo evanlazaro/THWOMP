@@ -98,7 +98,6 @@ app.get('/weather' , function(req, res) {
       json: true
   }, function (error, response, body) {
       if(!error && response.statusCode === 200) {
-          console.log(body);
           weather.setAPPID(process.env.OPEN_KEY);
           weather.setCity(body.city);
           weather.setCoordinate(body.latitude, body.longitude);

@@ -116,11 +116,11 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
     $http.get("/logout/");
     $scope.user();
   }
-  $scope.playlist = function(){
+  $scope.playlist = function(songname){
     for(var i = 0; i < 12; i++) {
       dial_settings[i] = knobs[i].getValue();
     }
-    console.log(dial_settings);
+    console.log(dial_settings, songname);
   }
   // Get information about current user
   $scope.user = function(){
@@ -168,6 +168,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
     dial_settings[i] = val;
   }
   $scope.setKnobs = function() {
+    //these are pretty close to average across all songs
     $scope.setKnob(0,14);
     $scope.setKnob(2, 120);
     $scope.setKnob(4, 5);

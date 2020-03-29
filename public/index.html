@@ -110,7 +110,7 @@
 		</div>
 
 		<div id="playlist-editor" class="modal">
-			<form class="modal-content animate" ng-submit="playlist()" method="post">
+			<form class="modal-content animate" ng-submit="playlist(songname)" method="post">
 				<div class="nav-weather modal-weather">
 					<h3 class="weather-element modal-element">{{weather[0]}}&deg;</h3>
 					<img class="weather-element" src={{weather[2]}}>
@@ -118,7 +118,8 @@
 				</div>
 			  <div class="close-container">
 				<span ng-click="weather_view=0" onclick="document.getElementById('playlist-editor').style.display='none'" class="close-modal" title="Close Modal">&times;</span>
-			  </div>
+				</div>
+				<input class="form-control-plaintext modal-search" ng-model="songname" type="text" placeholder="Enter a song to help build your playlist!"/>
 				<div class="row modal-row text-center">
 					<div class="col-sm">
 						<h4>Key <sup class="fa fa-info-circle tooltip_"><span class="tooltiptext" style="font-family: Montserrat;">	The estimated overall key of the track. Integers map to pitches using standard Pitch Class notation . E.g. 0 = C, 1 = C♯/D♭, 2 = D, and so on. If no key was detected, the value is -1.</span></sup></h4>

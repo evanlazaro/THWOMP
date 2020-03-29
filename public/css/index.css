@@ -209,6 +209,21 @@ h3.weather-element{
   font-weight: 100;
   vertical-align: -webkit-baseline-middle!important;
 }
+.modal-search{
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 25px;
+  color: white;
+  text-align: center;
+  border: 1px #181818 solid;
+  border-radius: 5px;
+  font-weight: 100;
+  width: 40%;
+}
+.modal-search:focus{
+  outline: 0px;
+  border: 1px #88ff88 solid;
+}
 @media only screen and (max-width: 800px) {
   .col-sm {
     width: 40vw;
