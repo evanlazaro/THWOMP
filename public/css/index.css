@@ -88,7 +88,7 @@ h1 {
 
 .close-container {
   text-align: center;
-  margin: 24px 0 0 0;
+  margin: 5px 0 0 0;
 }
 
 .modal {
@@ -212,17 +212,16 @@ h3.weather-element{
 .modal-search{
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 25px;
+  margin-bottom: 35px;
   color: white;
   text-align: center;
-  border: 1px #181818 solid;
-  border-radius: 5px;
+  border-bottom: 1px #777777 solid;
   font-weight: 100;
   width: 40%;
 }
 .modal-search:focus{
   outline: 0px;
-  border: 1px #88ff88 solid;
+  border-bottom: 1px #88ff88 solid;
 }
 @media only screen and (max-width: 800px) {
   .col-sm {
