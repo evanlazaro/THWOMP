@@ -19,7 +19,7 @@
 </head>
 <body ng-controller="mainController" class="bg-dark">
 
-	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" ng-init="user();refreshPlaylist();getWeather();setKnobs()">
+	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" ng-init="user();refreshPlaylist(0);getWeather();setKnobs()">
 		<a class="navbar-brand" href="#"><img src="favicon.ico" height="27" width="27"></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
 		  <span class="navbar-toggler-icon"></span>
@@ -67,9 +67,7 @@
 							<h4 class="playlist-accent">CHOOSE PLAYLIST&#9662;</h4>
 							<div class="arrow-up"></div>
 							<div class="dropdown-content">
-								<a href="#">Link 1</a>
-								<a href="#">Link 2</a>
-								<a href="#">Link 3</a>
+								<a ng-repeat="playlist in playlists" ng-click="refreshPlaylist($index)" href="#">{{playlist}}</a>
 							</div>
 						</div>
 					  <h2 class="playlist-title">{{playlistName}}</h2>

@@ -78,11 +78,13 @@ app.get('/logout/', function(req, res){
 app.get('/firstPlaylist', function(req, res) {
   spotifyApi.getUserPlaylists().then(
     function(data) {
-      console.log("playlist id: ", data.body.items[0].id);
-      var playlistId = data.body.items[0].id;
+      console.log("playlists: ", data.body.items);
+      var temp = {...data.body.items, size: data.body.items.length};
+      var playlistId = data.body.items[req.query.index].id;
       spotifyApi.getPlaylist(playlistId).then(function(data) {
         console.log(data);
-        res.json({songs: data});
+        var output = {...data,...temp}
+        res.json({songs: output});
       })
     },
     function(err) {

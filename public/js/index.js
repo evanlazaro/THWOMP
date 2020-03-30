@@ -104,6 +104,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
   $scope.playlistDescription = "Playlist description";
   $scope.playlistDuration = "0 hr 0 min";
   $scope.songs = [];
+  $scope.playlists = [];
   $scope.currid = "home";
   $scope.weather = ['',''];
   $scope.login = function(){
@@ -132,14 +133,25 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
     })
   }
   // need to call refreshPlaylist somewhere on the frontend automatically
-  $scope.refreshPlaylist = function() {
-    $http.get("/firstPlaylist").then(function(data) {
+  $scope.refreshPlaylist = function(index) {
+    console.log(index);
+    $http.get("/firstPlaylist?index="+index).then(function(data) {
       // do something with the tracks
       console.log(data)
+      $scope.playlists = [];
+      $scope.songs = [];
+      console.log(data.data.songs.length);
+      for(var i = 0; i < data.data.songs.size; i++) {
+        $scope.playlists.push(data.data.songs[i].name);
+      }
       $scope.weather_view = 0;
       $scope.playlistName = data.data.songs.body.name;
       $scope.playlistCreator = data.data.songs.body.owner.display_name;
-      $scope.playlistImg = data.data.songs.body.images[1].url;
+      if(data.data.songs.body.images.length > 0){
+        $scope.playlistImg = data.data.songs.body.images[1].url;
+      } else {
+        $scope.playlistImg ="noimage.png";
+      }
       $scope.playlistDescription = data.data.songs.body.description;
       var dur = 0;
       for(var i = 0; i < 20; i++) {
