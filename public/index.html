@@ -62,8 +62,16 @@
 					<img src="{{playlistImg}}" class="playlist-img">
 				  </div>
 				  <div class="col">
-					  <br />
-					  <h4 class="playlist-accent">PLAYLIST</h4>
+						<br />
+						<div class="dropdown">
+							<h4 class="playlist-accent">CHOOSE PLAYLIST&#9662;</h4>
+							<div class="arrow-up"></div>
+							<div class="dropdown-content">
+								<a href="#">Link 1</a>
+								<a href="#">Link 2</a>
+								<a href="#">Link 3</a>
+							</div>
+						</div>
 					  <h2 class="playlist-title">{{playlistName}}</h2>
 					  <p class="playlist-description">{{playlistDescription}}</p>
 					  <p class="playlist-description">Created by {{playlistCreator}} &middot; {{songs.length}} songs, {{playlistDuration}}  <button class="btn btn-link edit" ng-show="weather_view==1" onclick="document.getElementById('playlist-editor').style.display='block'" style="width:auto;">Edit &raquo;</button></p>
