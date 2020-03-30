@@ -9,6 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 var path = require('path');
 var weather = require('openweather-apis');
 weather.setLang('en');
+var request = require('request');
 require('dotenv').config();
 
 
@@ -77,11 +78,13 @@ app.get('/logout/', function(req, res){
 app.get('/firstPlaylist', function(req, res) {
   spotifyApi.getUserPlaylists().then(
     function(data) {
-      console.log("playlist id: ", data.body.items[0].id);
-      var playlistId = data.body.items[0].id;
+      console.log("playlists: ", data.body.items);
+      var temp = {...data.body.items, size: data.body.items.length};
+      var playlistId = data.body.items[req.query.index].id;
       spotifyApi.getPlaylist(playlistId).then(function(data) {
         console.log(data);
-        res.json({songs: data});
+        var output = {...data,...temp}
+        res.json({songs: output});
       })
     },
     function(err) {
@@ -91,23 +94,23 @@ app.get('/firstPlaylist', function(req, res) {
 })
 
 app.get('/weather' , function(req, res) {
-    weather.setAPPID(process.env.OPEN_KEY);
-    // set city by name
-    weather.setCity('Fairplay');
-  	// or set the coordinates (latitude,longitude)
-    weather.setCoordinate(50.0467656, 20.0048731);
-    // or set city by ID (recommended by OpenWeatherMap)
-    weather.setCityId(4367872);
- 
-    // or set zip code
-    weather.setZipCode(33615);
- 
-    // 'metric'  'internal'  'imperial'
-     weather.setUnits('metric');
-     weather.getAllWeather(function(err, JSONObj){
-      console.log(JSONObj);
-      res.json({weather: JSONObj})
-  });
+  url = ('https://geolocation-db.com/json');
+  request({
+      url: url,
+      json: true
+  }, function (error, response, body) {
+      if(!error && response.statusCode === 200) {
+          weather.setAPPID(process.env.OPEN_KEY);
+          weather.setCity(body.city);
+          weather.setCoordinate(body.latitude, body.longitude);
+          weather.setZipCode(body.postal);
+          weather.setUnits('imperial');
+          weather.getAllWeather(function(err, JSONObj){
+            console.log(JSONObj);
+            res.json({weather: JSONObj})
+          });
+      }
+  })
 })
 
 app.use(express.static('public'));
