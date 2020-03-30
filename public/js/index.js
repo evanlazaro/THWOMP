@@ -104,6 +104,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
   $scope.playlistDescription = "Playlist description";
   $scope.playlistDuration = "0 hr 0 min";
   $scope.songs = [];
+  $scope.currid = "home";
   $scope.weather = ['',''];
   $scope.login = function(){
     $http.get("/authUrl/").then(function(data) {
@@ -154,6 +155,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
       $scope.playlistDuration = msToHMS(dur);
     })
   }
+  //weather output for navbar
   $scope.getWeather = function() {
     $http.get("/weather").then(function(data) {
       $scope.weather = [];
@@ -163,6 +165,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
       console.log(data.data.weather);
     })
   }
+  //helper function for changing a knobs value 
   $scope.setKnob = function(i, val) {
     knobs[i].setValue(val);
     dial_settings[i] = val;
@@ -180,4 +183,9 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
     $scope.setKnob(10, 70);
     $scope.setKnob(11, 10);
   }
+  $scope.changeActive = function(id) {
+    document.getElementById($scope.currid).className = 'nav-link'; 
+    document.getElementById(id).className = 'nav-link active';
+    $scope.currid = id;
+}
 }]);

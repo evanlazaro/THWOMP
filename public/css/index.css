@@ -12,6 +12,11 @@ nav{
   margin-left: 6px;
   margin-right: 9px;
 }
+.active{
+  color: #1DB954!important;
+  font-weight: bold;
+}
+
 .bg-dark{
   background-color: #212121 !important;
 }
@@ -171,7 +176,7 @@ h1 {
   vertical-align: baseline;
 }
 .call{
-  margin: 50px auto;
+  margin: 20px auto;
 }
 .animate {
   animation: animatezoom 0.6s
