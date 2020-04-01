@@ -1,5 +1,13 @@
 var jq = jQuery.noConflict();
 
+function getKnobValues(){
+  var knob_values = [];
+  for(var i = 0; i < 12; i++) {
+    knob_values[i] = knobs[i].getValue();
+  }
+  return knob_values;
+}
+
 function getTitle(scope){
   var json;
   var h;
@@ -117,10 +125,8 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
     $scope.user();
   }
   $scope.playlist = function(){
-    for(var i = 0; i < 12; i++) {
-      dial_settings[i] = knobs[i].getValue();
-    }
-    console.log(dial_settings);
+    var knob_values = getKnobValues();
+    console.log(knob_values);
   }
   // Get information about current user
   $scope.user = function(){
@@ -128,6 +134,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
       return data.data.user;
     }).then( function(result){
       $scope.userInfo = result;
+      console.log(result);
     })
   }
   // need to call refreshPlaylist somewhere on the frontend automatically
@@ -178,5 +185,40 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
     $scope.setKnob(9, 60);
     $scope.setKnob(10, 70);
     $scope.setKnob(11, 10);
+  }
+  $scope.getUserPresetName = function (){
+    document.getElementById('playlist-editor').style.display='none';
+  }
+  $scope.saveUserPreset = async function(){
+    var name = jq('#userPresetNameInput').val();
+    jq('#userPresetNameModal').modal('hide');
+    jq('#playlist-editor').modal('show');
+    var knobs = getKnobValues();
+    var data = {
+      id: $scope.userInfo.id,
+      name: name,
+      key: knobs[0],
+      key_confidence: knobs[1],
+      tempo: knobs[2],
+      tempo_confidence: knobs[3],
+      instrumentalness: knobs[4],
+      liveness: knobs[5],
+      loudness: knobs[6],
+      energy: knobs[7],
+      speechiness: knobs[8],
+      valence: knobs[9],
+      danceability: knobs[10],
+      acousticness: knobs[11]
+    };
+    var options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data),
+    };
+
+    var response = await fetch('/newUserPreset', options);
+    var responseData = await response.json();
   }
 }]);
