@@ -112,6 +112,8 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
   $scope.playlistDescription = "Playlist description";
   $scope.playlistDuration = "0 hr 0 min";
   $scope.songs = [];
+  $scope.playlists = [];
+  $scope.currid = "home";
   $scope.weather = ['',''];
   $scope.login = function(){
     $http.get("/authUrl/").then(function(data) {
@@ -124,9 +126,11 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
     $http.get("/logout/");
     $scope.user();
   }
-  $scope.playlist = function(){
-    var knob_values = getKnobValues();
-    console.log(knob_values);
+  $scope.playlist = function(songname){
+    for(var i = 0; i < 12; i++) {
+      dial_settings[i] = knobs[i].getValue();
+    }
+    console.log(dial_settings, songname);
   }
   // Get information about current user
   $scope.user = function(){
@@ -138,14 +142,25 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
     })
   }
   // need to call refreshPlaylist somewhere on the frontend automatically
-  $scope.refreshPlaylist = function() {
-    $http.get("/firstPlaylist").then(function(data) {
+  $scope.refreshPlaylist = function(index) {
+    console.log(index);
+    $http.get("/firstPlaylist?index="+index).then(function(data) {
       // do something with the tracks
       console.log(data)
+      $scope.playlists = [];
+      $scope.songs = [];
+      console.log(data.data.songs.length);
+      for(var i = 0; i < data.data.songs.size; i++) {
+        $scope.playlists.push(data.data.songs[i].name);
+      }
       $scope.weather_view = 0;
       $scope.playlistName = data.data.songs.body.name;
       $scope.playlistCreator = data.data.songs.body.owner.display_name;
-      $scope.playlistImg = data.data.songs.body.images[1].url;
+      if(data.data.songs.body.images.length > 0){
+        $scope.playlistImg = data.data.songs.body.images[1].url;
+      } else {
+        $scope.playlistImg ="noimage.png";
+      }
       $scope.playlistDescription = data.data.songs.body.description;
       var dur = 0;
       for(var i = 0; i < 20; i++) {
@@ -161,6 +176,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
       $scope.playlistDuration = msToHMS(dur);
     })
   }
+  //weather output for navbar
   $scope.getWeather = function() {
     $http.get("/weather").then(function(data) {
       $scope.weather = [];
@@ -170,11 +186,13 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
       console.log(data.data.weather);
     })
   }
+  //helper function for changing a knobs value 
   $scope.setKnob = function(i, val) {
     knobs[i].setValue(val);
     dial_settings[i] = val;
   }
   $scope.setKnobs = function() {
+    //these are pretty close to average across all songs
     $scope.setKnob(0,14);
     $scope.setKnob(2, 120);
     $scope.setKnob(4, 5);
@@ -221,4 +239,9 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
     var response = await fetch('/newUserPreset', options);
     var responseData = await response.json();
   }
+  $scope.changeActive = function(id) {
+    document.getElementById($scope.currid).className = 'nav-link'; 
+    document.getElementById(id).className = 'nav-link active';
+    $scope.currid = id;
+}
 }]);

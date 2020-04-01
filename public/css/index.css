@@ -21,6 +21,11 @@ nav{
   margin-left: 6px;
   margin-right: 9px;
 }
+.active{
+  color: #1DB954!important;
+  font-weight: bold;
+}
+
 .bg-dark{
   background-color: #212121 !important;
 }
@@ -86,8 +91,45 @@ h1 {
 .playlist-accent{
   letter-spacing: 2px;
   font-size: .8em;
+  cursor: pointer;
+  margin-bottom: 0px;
+  width: auto;
 }
+.dropdown{
+  width: fit-content;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #333333;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.arrow-up {
+  display: none;
+  margin-left: 130px;
+  width: 0; 
+  height: 0; 
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  
+  border-bottom: 7px solid #333333;
+}
+.dropdown-content a {
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.dropdown-content a:hover {color: #1DB954;}
+
+.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .arrow-up {display: block;}
+
+.dropdown:hover .playlist-accent {color: #1DB954;}
 .playlist-title{
+  margin-top: 13px;
   font-family: 'Montserrat', ;
   font-size: 3em;
   font-weight: 800;
@@ -97,7 +139,7 @@ h1 {
 
 .close-container {
   text-align: center;
-  margin: 24px 0 0 0;
+  margin: 5px 0 0 0;
 }
 
 .modal {
@@ -143,7 +185,7 @@ h1 {
   vertical-align: baseline;
 }
 .call{
-  margin: 50px auto;
+  margin: 20px auto;
 }
 .animate {
   animation: animatezoom 0.6s
@@ -153,7 +195,7 @@ h4{
   font-weight: 300;
   color: white;
   margin-bottom: 15px;
-  padding-left: 13px;
+  padding-left: 0px;
 }
 .modal-row {
   margin-bottom: 30px;
@@ -217,6 +259,20 @@ h3.weather-element{
   color: white;
   font-weight: 100;
   vertical-align: -webkit-baseline-middle!important;
+}
+.modal-search{
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 35px;
+  color: white;
+  text-align: center;
+  border-bottom: 1px #777777 solid;
+  font-weight: 100;
+  width: 40%;
+}
+.modal-search:focus{
+  outline: 0px;
+  border-bottom: 1px #88ff88 solid;
 }
 @media only screen and (max-width: 800px) {
   .col-sm {

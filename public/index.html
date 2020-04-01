@@ -125,10 +125,10 @@
 		<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 		  <ul class="navbar-nav">
 			<li class="nav-item">
-			  <a class="nav-link" ng-click="view=0" href="#">Home</a>
+			  <a class="nav-link active" id="home" ng-click="view=0;changeActive('home')" href="#">Home</a>
 			</li>
 			<li class="nav-item">
-			  <a class="nav-link" ng-click="view=1" href="#">Profile</a>
+			  <a class="nav-link" id="profile" ng-click="view=1;;changeActive('profile')" href="#">Profile</a>
 			</li>
 			</ul>
 			<div class="nav-weather">
@@ -160,8 +160,14 @@
 					<img src="{{playlistImg}}" class="playlist-img">
 				  </div>
 				  <div class="col">
-					  <br />
-					  <h4 class="playlist-accent">PLAYLIST</h4>
+						<br />
+						<div class="dropdown">
+							<h4 class="playlist-accent">CHOOSE PLAYLIST&#9662;</h4>
+							<div class="arrow-up"></div>
+							<div class="dropdown-content">
+								<a ng-repeat="playlist in playlists" ng-click="refreshPlaylist($index)" href="#">{{playlist}}</a>
+							</div>
+						</div>
 					  <h2 class="playlist-title">{{playlistName}}</h2>
 					  <p class="playlist-description">{{playlistDescription}}</p>
 					  <p class="playlist-description">Created by {{playlistCreator}} &middot; {{songs.length}} songs, {{playlistDuration}}  <button class="btn btn-link edit" ng-show="weather_view==1" onclick="document.getElementById('playlist-editor').style.display='block'" style="width:auto;">Edit &raquo;</button></p>
@@ -206,8 +212,6 @@
 			</div>
 		  </div>
 		</div>
-
-
 
 	  </main>
 
