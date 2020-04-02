@@ -10,9 +10,6 @@ function getKnobValues(){
 
 // Randomly choose title
 function getTitle(scope){
-  var json;
-  var h;
-  var w;
   var thwomp = {};
   jq.ajax({
     url: "json/hw.json",
@@ -21,9 +18,9 @@ function getTitle(scope){
     success: function(result) {
       jq.each(result,function(){
         json = this;
-        h = this.h[Math.floor(Math.random() * json.h.length)];
-        w = this.w[Math.floor(Math.random() * json.w.length)];
-        thwomp = "The " +h.charAt(0).toUpperCase() + h.slice(1) + " " +w.charAt(0).toUpperCase() + w.slice(1) + " and Obscure Music Picker!";
+        var h = this.h[Math.floor(Math.random() * this.h.length)];
+        var w = this.w[Math.floor(Math.random() * this.w.length)];
+        thwomp = "The " +h + " " + w  + " and Obscure Music Picker!";
       });
     }
   });
@@ -65,39 +62,24 @@ for(var i = 0; i < 12; i++){
   elem1.appendChild(node);
   dial_settings.push(50);
 }
+
+// Convert ms to Hours/Minutes
 function msToHMS( ms ) {
-  // 1- Convert to seconds:
-  var seconds = ms / 1000;
-  // 2- Extract hours:
-  var hours = parseInt( seconds / 3600 ); // 3,600 seconds in 1 hour
-  seconds = seconds % 3600; // seconds remaining after extracting hours
-  // 3- Extract minutes:
-  var minutes = parseInt( seconds / 60 ); // 60 seconds in 1 minute
-  // 4- Keep only seconds not extracted to minutes:
-  seconds = seconds % 60;
+  var seconds = ms / 1000; // 1- Convert to seconds
+  var hours = parseInt( seconds / 3600 ); // 2- Extract hours
+  seconds = seconds % 3600;
+  var minutes = parseInt( seconds / 60 ); // 3- Extract minutes
+  seconds = seconds % 60; // 4- Keep only seconds not extracted to minutes
   if(hours)
     return ( hours+" hr "+minutes+" min ");
   else
     return ( minutes+":"+parseInt(seconds) );
 }
-var clock = document.getElementById('clock');
-var clock2 = document.getElementById('clock2');
 
 function time() {
   var d = new Date();
-  var s = d.getSeconds();
-  var m = d.getMinutes();
-  var h = d.getHours()%12;
-  if(s < 10) {
-    s = "0"+s;
-  }
-  if(m < 10) {
-    m = "0"+m;
-  }
-  clock.textContent = h + ":" + m + ":" + s;
-  clock2.textContent = h + ":" + m + ":" + s;
+  jq(".clock").html(d.toLocaleTimeString());
 }
-
 setInterval(time, 1000);
 
 var app = angular.module("myApp", []);
@@ -116,6 +98,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
   $scope.playlists = [];
   $scope.currid = "home";
   $scope.weather = ['',''];
+  // Log in
   $scope.login = function(){
     $http.get("/authUrl/").then(function(data) {
       window.location = data.data.authUrl;

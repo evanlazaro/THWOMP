@@ -17,7 +17,7 @@
 	<script type="text/javascript" src="js/index.js"></script>
 	<link rel="icon" type="image/png" sizes="16x16" href="favicon.ico">
 </head>
-<body ng-controller="mainController" class="bg-dark">
+<body ng-controller="mainController" class="bg-dark" ng-init="user();refreshPlaylist(0);getWeather();setKnobs()">
 
 	<!-- Save user preferences popup -->
 	<div id="userPresetNameModal" class="modal fade" role="dialog">
@@ -49,7 +49,7 @@
 			<div class="nav-weather modal-weather">
 				<h3 class="weather-element modal-element">{{weather[0]}}&deg;</h3>
 				<img class="weather-element" src={{weather[2]}}>
-				<h3 class="weather-element modal-element" id="clock2"></h3>
+				<h3 class="weather-element modal-element clock"></h3>
 			</div>
 			<div class="close-container">
 			<span ng-click="weather_view=0" onclick="document.getElementById('playlist-editor').style.display='none'" class="close-modal" title="Close Modal">&times;</span>
@@ -120,7 +120,7 @@
 		</div>
 
 	<!-- Navigation bar -->
-	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" ng-init="user();refreshPlaylist(0);getWeather();setKnobs()">
+	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 		<a class="navbar-brand" href="#"><img src="favicon.ico" height="27" width="27"></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
 		  <span class="navbar-toggler-icon"></span>
@@ -137,7 +137,7 @@
 			<div class="nav-weather">
 				<h3 class="weather-element" ng-show="weather_view==0">{{weather[0]}}&deg;</h3>
 				<img class="weather-element" ng-show="weather_view==0" src={{weather[1]}}>
-				<h3 class="weather-element" ng-show="weather_view==0" id="clock"></h3>
+				<h3 class="weather-element clock" ng-show="weather_view==0"></h3>
 			</div>
 			<form class="form-inline my-2 my-lg-0" ng-if="!userInfo" ng-submit="login()">
 				<input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Login">
