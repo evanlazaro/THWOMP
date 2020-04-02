@@ -4,7 +4,7 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
 	<meta charset="utf-8">
-	<!-- Angular, bootstrap, and jquery -->
+	<!-- Angular, bootstrap, jquery, fonts, and style -->
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.js"></script>
@@ -19,6 +19,7 @@
 </head>
 <body ng-controller="mainController" class="bg-dark">
 
+	<!-- Save user preferences popup -->
 	<div id="userPresetNameModal" class="modal fade" role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -42,6 +43,7 @@
 		</div>
 	</div>
 
+	<!-- Create playlist popup -->
 	<div id="playlist-editor" class="modal">
 		<form class="modal-content animate" ng-submit="playlist()" method="post">
 			<div class="nav-weather modal-weather">
@@ -117,7 +119,8 @@
 		</form>
 		</div>
 
-	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" ng-init="user();refreshPlaylist();getWeather();setKnobs()">
+	<!-- Navigation bar -->
+	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" ng-init="user();refreshPlaylist(0);getWeather();setKnobs()">
 		<a class="navbar-brand" href="#"><img src="favicon.ico" height="27" width="27"></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
 		  <span class="navbar-toggler-icon"></span>
@@ -146,6 +149,7 @@
 		</div>
 	  </nav>
 
+	  <!-- Home page  -->
 	  <main role="main" ng-show="view==0">
 		<div class="jumbotron theme over">
 		  <div class="container">
@@ -215,6 +219,7 @@
 
 	  </main>
 
+	<!-- Profile page -->
 	<main role="main" ng-show="view==1">
 		<div class="jumbotron theme over">
 			<div class="container">

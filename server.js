@@ -106,12 +106,14 @@ app.get('/logout/', function(req, res){
   res.redirect('/');
 });
 
-app.get('/firstPlaylist', function(req, res) {
+// Return songs from users playlist given playlist number
+app.get('/playlists', function(req, res) {
   spotifyApi.getUserPlaylists().then(
     function(data) {
       console.log("playlists: ", data.body.items);
       var temp = {...data.body.items, size: data.body.items.length};
       var playlistId = data.body.items[req.query.index].id;
+      // Return songs
       spotifyApi.getPlaylist(playlistId).then(function(data) {
         console.log(data);
         var output = {...data,...temp}
@@ -124,6 +126,7 @@ app.get('/firstPlaylist', function(req, res) {
   )
 })
 
+// Retrieve weather data from API
 app.get('/weather' , function(req, res) {
   url = ('https://geolocation-db.com/json');
   request({
@@ -144,12 +147,14 @@ app.get('/weather' , function(req, res) {
   })
 })
 
+// Retrieve presets for current user
 app.get('/user_presets', function(req, res){
   mongoose.model('user_presets').find(function(err, user_presets){
     res.send(user_presets);
   })
 })
 
+// Add new user preset to database
 app.post('/newUserPreset', function(req, res){
   var preset = new User_preset();
   preset.user_id = req.body.id;

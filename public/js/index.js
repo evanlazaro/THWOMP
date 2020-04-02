@@ -8,6 +8,7 @@ function getKnobValues(){
   return knob_values;
 }
 
+// Randomly choose title
 function getTitle(scope){
   var json;
   var h;
@@ -132,7 +133,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
     }
     console.log(dial_settings, songname);
   }
-  // Get information about current user
+  // Get information about current user, store as object
   $scope.user = function(){
     $http.get("/userInfo/").then(function(data) {
       return data.data.user;
@@ -141,10 +142,10 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
       console.log(result);
     })
   }
-  // need to call refreshPlaylist somewhere on the frontend automatically
+  // Display user's playlist given playlist number
   $scope.refreshPlaylist = function(index) {
     console.log(index);
-    $http.get("/firstPlaylist?index="+index).then(function(data) {
+    $http.get("/playlists?index="+index).then(function(data) {
       // do something with the tracks
       console.log(data)
       $scope.playlists = [];
@@ -165,12 +166,13 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
       var dur = 0;
       for(var i = 0; i < 20; i++) {
         var song = [];
-        song.push( data.data.songs.body.tracks.items[i].track.name);//title
-        song.push( data.data.songs.body.tracks.items[i].track.artists[0].name);//artist
-        song.push( data.data.songs.body.tracks.items[i].track.album.name); //album
-        dur+=data.data.songs.body.tracks.items[i].track.duration_ms;
-        song.push( msToHMS(data.data.songs.body.tracks.items[i].track.duration_ms)); //time(ms)
-        song.push( $sce.trustAsHtml('<iframe src="https://open.spotify.com/embed/track/'+data.data.songs.body.tracks.items[i].track.id+'" width="80" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>'));//to get the uri
+        var curr = data.data.songs.body.tracks.items[i].track;
+        song.push( curr.name);//title
+        song.push( curr.artists[0].name);//artist
+        song.push( curr.album.name); //album
+        dur+=curr.duration_ms;
+        song.push( msToHMS(curr.duration_ms)); //time(ms)
+        song.push( $sce.trustAsHtml('<iframe src="https://open.spotify.com/embed/track/'+curr.id+'" width="80" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>'));//to get the uri
         $scope.songs.push(song);
       }
       $scope.playlistDuration = msToHMS(dur);
@@ -207,6 +209,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
   $scope.getUserPresetName = function (){
     document.getElementById('playlist-editor').style.display='none';
   }
+  // POST user preferences
   $scope.saveUserPreset = async function(){
     var name = jq('#userPresetNameInput').val();
     jq('#userPresetNameModal').modal('hide');
