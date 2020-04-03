@@ -190,9 +190,9 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
       console.log(change*100);
       $scope.dji = (change*100);
       if($scope.dji >= 0)
-        $scope.arrow =  $sce.trustAsHtml("<img class='nav-arrow' src='arrow-green.png'>");
+        $scope.arrow = 'arrow-green.png';
       else
-        $scope.arrow = $sce.trustAsHtml("<img class='nav-arrow' src='arrow-red.png'>");
+        $scope.arrow = 'arrow-red.png';
     })
   }
   //helper function for changing a knobs value 

@@ -280,6 +280,9 @@ h3.weather-element{
   width: auto;
   vertical-align: baseline;
 }
+.modal-element .nav-arrow{
+  height: 30px;
+}
 @media only screen and (max-width: 800px) {
   .col-sm {
     width: 40vw;
