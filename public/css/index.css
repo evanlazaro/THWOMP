@@ -107,7 +107,7 @@ h1 {
   z-index: 1;
 }
 .arrow-up {
-  display: none;
+  visibility: hidden;
   margin-left: 130px;
   width: 0; 
   height: 0; 
@@ -125,7 +125,7 @@ h1 {
 .dropdown-content a:hover {color: #1DB954;}
 
 .dropdown:hover .dropdown-content {display: block;}
-.dropdown:hover .arrow-up {display: block;}
+.dropdown:hover .arrow-up {visibility: visible;}
 
 .dropdown:hover .playlist-accent {color: #1DB954;}
 .playlist-title{
@@ -273,6 +273,15 @@ h3.weather-element{
 .modal-search:focus{
   outline: 0px;
   border-bottom: 1px #88ff88 solid;
+}
+.nav-arrow{
+  display: inline-block;
+  height: 20px;
+  width: auto;
+  vertical-align: baseline;
+}
+.modal-element .nav-arrow{
+  height: 30px;
 }
 @media only screen and (max-width: 800px) {
   .col-sm {

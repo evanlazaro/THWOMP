@@ -11,6 +11,7 @@ var path = require('path');
 var weather = require('openweather-apis');
 weather.setLang('en');
 var request = require('request');
+const alpha = require('alphavantage')({ key: 'AU33596Z2YZ5B6C2' });
 require('dotenv').config();
 
 
@@ -145,6 +146,14 @@ app.get('/weather' , function(req, res) {
           });
       }
   })
+})
+
+// Retrieve stock data from API
+app.get('/stonks' , function(req, res) {
+  alpha.data.daily(`dji`).then(data => {
+    console.log(data["Time Series (Daily)"]);
+    res.json({data: data["Time Series (Daily)"]})
+  });
 })
 
 // Retrieve presets for current user

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Web Systems Science Term Project",
   "dependencies": {
+    "alphavantage": "^2.0.1",
     "angular-sanitize": "^1.7.9",
     "dotenv": "^8.2.0",
     "express": "^4.10.2",

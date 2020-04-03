@@ -17,7 +17,7 @@
 	<script type="text/javascript" src="js/index.js"></script>
 	<link rel="icon" type="image/png" sizes="16x16" href="favicon.ico">
 </head>
-<body ng-controller="mainController" class="bg-dark" ng-init="user();refreshPlaylist(0);getWeather();setKnobs()">
+<body ng-controller="mainController" class="bg-dark" ng-init="user();refreshPlaylist(0);getWeather();setKnobs();getStocks()">
 
 	<!-- Save user preferences popup -->
 	<div id="userPresetNameModal" class="modal fade" role="dialog">
@@ -47,8 +47,9 @@
 	<div id="playlist-editor" class="modal">
 		<form class="modal-content animate" ng-submit="playlist()" method="post">
 			<div class="nav-weather modal-weather">
+				<h3 class="weather-element modal-element">{{dji | number : 2}}% <img class="nav-arrow" ng-src="{{arrow}}"></h3>
 				<h3 class="weather-element modal-element">{{weather[0]}}&deg;</h3>
-				<img class="weather-element" src={{weather[2]}}>
+				<img class="weather-element" ng-src={{weather[2]}}>
 				<h3 class="weather-element modal-element clock"></h3>
 			</div>
 			<div class="close-container">
@@ -135,8 +136,9 @@
 			</li>
 			</ul>
 			<div class="nav-weather">
+				<h3 class="weather-element" ng-show="weather_view==0">{{dji | number : 2}}% <img class="nav-arrow" ng-src="{{arrow}}"></h3>
 				<h3 class="weather-element" ng-show="weather_view==0">{{weather[0]}}&deg;</h3>
-				<img class="weather-element" ng-show="weather_view==0" src={{weather[1]}}>
+				<img class="weather-element" ng-show="weather_view==0" ng-src={{weather[1]}}>
 				<h3 class="weather-element clock" ng-show="weather_view==0"></h3>
 			</div>
 			<form class="form-inline my-2 my-lg-0" ng-if="!userInfo" ng-submit="login()">
@@ -161,7 +163,7 @@
 		<div class="container">
 			  <div class="row text-light">
 				  <div class="img-col">
-					<img src="{{playlistImg}}" class="playlist-img">
+					<img ng-src="{{playlistImg}}" class="playlist-img">
 				  </div>
 				  <div class="col">
 						<br />
