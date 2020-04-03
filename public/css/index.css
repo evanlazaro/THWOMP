@@ -259,6 +259,7 @@ h3.weather-element{
   color: white;
   font-weight: 100;
   vertical-align: -webkit-baseline-middle!important;
+  margin-left: 25px!important;
 }
 .modal-search{
   margin-left: auto;
@@ -278,10 +279,16 @@ h3.weather-element{
   display: inline-block;
   height: 20px;
   width: auto;
-  vertical-align: baseline;
+  vertical-align: middle;
 }
 .modal-element .nav-arrow{
   height: 30px;
+}
+.middle{
+  margin-right: -10px;
+}
+h3.weather-element{
+  margin-left: 10px;
 }
 @media only screen and (max-width: 800px) {
   .col-sm {
