@@ -274,6 +274,12 @@ h3.weather-element{
   outline: 0px;
   border-bottom: 1px #88ff88 solid;
 }
+.nav-arrow{
+  display: inline-block;
+  height: 20px;
+  width: auto;
+  vertical-align: baseline;
+}
 @media only screen and (max-width: 800px) {
   .col-sm {
     width: 40vw;

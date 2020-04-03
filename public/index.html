@@ -17,7 +17,7 @@
 	<script type="text/javascript" src="js/index.js"></script>
 	<link rel="icon" type="image/png" sizes="16x16" href="favicon.ico">
 </head>
-<body ng-controller="mainController" class="bg-dark" ng-init="user();refreshPlaylist(0);getWeather();setKnobs()">
+<body ng-controller="mainController" class="bg-dark" ng-init="user();refreshPlaylist(0);getWeather();setKnobs();getStocks()">
 
 	<!-- Save user preferences popup -->
 	<div id="userPresetNameModal" class="modal fade" role="dialog">
@@ -135,6 +135,7 @@
 			</li>
 			</ul>
 			<div class="nav-weather">
+				<h3 class="weather-element" ng-show="weather_view==0">{{dji | number : 2}}% <span ng-bind-html=arrow></span></h3>
 				<h3 class="weather-element" ng-show="weather_view==0">{{weather[0]}}&deg;</h3>
 				<img class="weather-element" ng-show="weather_view==0" ng-src={{weather[1]}}>
 				<h3 class="weather-element clock" ng-show="weather_view==0"></h3>

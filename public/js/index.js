@@ -97,7 +97,9 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
   $scope.songs = [];
   $scope.playlists = [];
   $scope.currid = "home";
-  $scope.weather = [['','','']];
+  $scope.weather = [];
+  $scope.dji = '0%';
+  $scope.arrow;
   // Log in
   $scope.login = function(){
     $http.get("/authUrl/").then(function(data) {
@@ -167,6 +169,30 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
       $scope.weather.push("http://openweathermap.org/img/wn/"+data.data.weather.weather[0].icon+".png");
       $scope.weather.push("http://openweathermap.org/img/wn/"+data.data.weather.weather[0].icon+"@2x.png");
       console.log(data.data.weather);
+    })
+  }
+  $scope.getStocks = function() {
+    $http.get("/stonks").then(function(data) {
+      var count = 0;
+      var current;
+      var prev_close;
+      for(var i in data.data.data) {
+        if(count == 0){
+          current = data.data.data[i]["4. close"];
+        } else if(count == 1) {
+          prev_close = data.data.data[i]["4. close"];
+        } else {
+          break;
+        }
+        count++;
+      }
+      var change = (current-prev_close)/(prev_close)
+      console.log(change*100);
+      $scope.dji = (change*100);
+      if($scope.dji >= 0)
+        $scope.arrow =  $sce.trustAsHtml("<img class='nav-arrow' src='arrow-green.png'>");
+      else
+        $scope.arrow = $sce.trustAsHtml("<img class='nav-arrow' src='arrow-red.png'>");
     })
   }
   //helper function for changing a knobs value 
