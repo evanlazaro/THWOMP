@@ -97,7 +97,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
   $scope.songs = [];
   $scope.playlists = [];
   $scope.currid = "home";
-  $scope.weather = ['',''];
+  $scope.weather = [['','','']];
   // Log in
   $scope.login = function(){
     $http.get("/authUrl/").then(function(data) {
@@ -127,13 +127,11 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
   }
   // Display user's playlist given playlist number
   $scope.refreshPlaylist = function(index) {
-    console.log(index);
     $http.get("/playlists?index="+index).then(function(data) {
       // do something with the tracks
       console.log(data)
       $scope.playlists = [];
       $scope.songs = [];
-      console.log(data.data.songs.length);
       for(var i = 0; i < data.data.songs.size; i++) {
         $scope.playlists.push(data.data.songs[i].name);
       }
