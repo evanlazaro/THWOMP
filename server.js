@@ -129,7 +129,32 @@ app.get('/playlists', function(req, res) {
 //get statistics from user
 app.get('/stats', function(req, res) {
   //no personalization endpoints in the npm
-  console.log('stats');
+  spotifyApi.getFollowedArtists()
+  .then(function(data) {
+    // 'This user is following 1051 artists!'
+    console.log(data);
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+  spotifyApi.getMySavedTracks({
+    limit : 2,
+    offset: 1
+  })
+  .then(function(data) {
+    console.log(data);
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+  spotifyApi.getMySavedAlbums({
+    limit : 1,
+    offset: 0
+  })
+  .then(function(data) {
+    // Output items
+    console.log(data);
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
 })
 // Retrieve weather data from API
 app.get('/weather' , function(req, res) {

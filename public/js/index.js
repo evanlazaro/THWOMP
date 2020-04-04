@@ -134,6 +134,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
   }
   // Display user's playlist given playlist number
   $scope.refreshPlaylist = function(index) {
+    console.log(index);
     $http.get("/playlists?index="+index).then(function(data) {
       // do something with the tracks
       console.log(data)
@@ -147,7 +148,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
       $scope.playlistName = data.data.songs.body.name;
       $scope.playlistCreator = data.data.songs.body.owner.display_name;
       if(data.data.songs.body.images.length > 0){
-        $scope.playlistImg = data.data.songs.body.images[1].url;
+        $scope.playlistImg = data.data.songs.body.images[0].url;
       } else {
         $scope.playlistImg ="noimage.png";
       }
