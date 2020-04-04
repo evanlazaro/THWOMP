@@ -8,7 +8,6 @@ body {
 nav{
   box-shadow: 0 2px 4px rgba(0,0,0,.08);
 }
-
 #userPresetNameModal{
   z-index: 1050;
 }
@@ -244,6 +243,8 @@ h4{
 }
 .nav-weather{
   margin: 0 auto;
+  height:50px;
+  overflow: hidden;
 }
 .weather-element{
   display: inline-block;
@@ -324,6 +325,7 @@ h3.weather-element{
   display: none;
 }
 .inline-title{
+  overflow: hidden;
   display: inline;
   vertical-align: middle;
   padding-left: 20px;
@@ -339,13 +341,12 @@ h3.weather-element{
   .playlist-smol{
     display:block;
     margin: 10px auto 10px auto;
-    width: 90%;
+    width: fit-content;
     font-size: 2em;
     font-weight: 800;
   }
-  .navbar-weather{
-    visibility: hidden;
-    display:none;
+  #playlist-titler{
+    width: 100%!important;
   }
 }
 @keyframes animatezoom {

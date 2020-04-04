@@ -117,7 +117,7 @@ app.get('/playlists', function(req, res) {
       // Return songs
       spotifyApi.getPlaylist(playlistId).then(function(data) {
         console.log(data);
-        var output = {...data,...temp}
+        var output = {...temp,...data}
         res.json({songs: output});
       })
     },

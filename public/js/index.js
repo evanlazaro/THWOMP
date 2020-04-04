@@ -103,6 +103,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
   $scope.currid = "home";
   $scope.weather = [];
   $scope.dji = 0;
+  $scope.test = "";
   $scope.arrow;
   // Log in
   $scope.login = function(){
@@ -138,6 +139,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
       console.log(data)
       $scope.playlists = [];
       $scope.songs = [];
+      $scope.test = $sce.trustAsHtml('<iframe src="https://open.spotify.com/embed/playlist/'+data.data.songs[index].id+'" width="500" height="700" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>');
       for(var i = 0; i < data.data.songs.size; i++) {
         $scope.playlists.push(data.data.songs[i].name);
       }

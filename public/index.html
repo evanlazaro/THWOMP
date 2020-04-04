@@ -164,8 +164,7 @@
 			<button class="btn btn-link text-center call" ng-click="weather_view=1" onclick="document.getElementById('playlist-editor').style.display='block'" style="width:auto;">Create Playlist! &raquo;</button>
 		  </div>
 		</div>
-
-		<div class="container">
+		<div id="playlist-titler" class="container">
 			  <div class="row text-light">
 				  <div class="img-col">
 					<img ng-src="{{playlistImg}}" class="playlist-img">
@@ -221,8 +220,8 @@
 				</div>
 			  </div>
 			</div>
-			<div class="playlist-smol" ng-repeat="song in songs">
-				<div class="inline-title" ng-bind-html="song[4]"></div><div class="inline-title">{{song[0]}}</div>
+			<div class="playlist-smol">
+				<div class="inline-title" ng-bind-html="test"></div>
 			</div>
 		  </div>
 		</div>
