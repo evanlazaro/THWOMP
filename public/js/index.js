@@ -57,10 +57,14 @@ for(var i = 0; i < 12; i++){
 	// Create element node.
 	var node = knob.node();
 
-	// Add it to the DOM.
-	var elem1 = document.getElementById('dial'+(i+1));
-  elem1.appendChild(node);
-  dial_settings.push(50);
+  // Add it to the DOM.
+  var elem1 = document.getElementById('dial'+(i+1));
+  try{elem1.appendChild(node);
+    dial_settings.push(50);
+  } catch{
+    //
+  }
+  
 }
 
 // Convert ms to Hours/Minutes
@@ -98,7 +102,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
   $scope.playlists = [];
   $scope.currid = "home";
   $scope.weather = [];
-  $scope.dji = '0%';
+  $scope.dji = 0;
   $scope.arrow;
   // Log in
   $scope.login = function(){
