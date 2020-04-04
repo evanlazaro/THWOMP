@@ -55,7 +55,8 @@ var spotifyApi = new SpotifyWebApi({
  redirectUri: 'http://localhost:3000/callback'
 });
 // need to change scopes later depending on what data we need from the user
-var scopes = ['user-read-private', 'user-read-email'];
+var scopes = ['user-read-private', 'user-read-email','playlist-read-private','playlist-modify-private','playlist-modify-public','playlist-read-collaborative',
+              'user-library-modify','user-top-read','user-read-playback-position','user-read-recently-played','user-follow-read','user-follow-modify'];
 // need to redirect user to the authorization URL
 var authorizeURL = spotifyApi.createAuthorizeURL(scopes);
 
@@ -111,12 +112,11 @@ app.get('/logout/', function(req, res){
 app.get('/playlists', function(req, res) {
   spotifyApi.getUserPlaylists().then(
     function(data) {
-      console.log("playlists: ", data.body.items);
+   //   console.log("playlists: ", data.body.items);
       var temp = {...data.body.items, size: data.body.items.length};
       var playlistId = data.body.items[req.query.index].id;
       // Return songs
       spotifyApi.getPlaylist(playlistId).then(function(data) {
-        console.log(data);
         var output = {...temp,...data}
         res.json({songs: output});
       })
@@ -126,7 +126,11 @@ app.get('/playlists', function(req, res) {
     }
   )
 })
-
+//get statistics from user
+app.get('/stats', function(req, res) {
+  //no personalization endpoints in the npm
+  console.log('stats');
+})
 // Retrieve weather data from API
 app.get('/weather' , function(req, res) {
   url = ('https://geolocation-db.com/json');
@@ -151,7 +155,6 @@ app.get('/weather' , function(req, res) {
 // Retrieve stock data from API
 app.get('/stonks' , function(req, res) {
   alpha.data.daily(`dji`).then(data => {
-    console.log(data["Time Series (Daily)"]);
     res.json({data: data["Time Series (Daily)"]})
   });
 })

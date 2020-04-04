@@ -201,6 +201,11 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
         $scope.arrow = 'arrow-red.png';
     })
   }
+  $scope.getStats = function() {
+    $http.get("/stats").then(function(data) {
+      console.log(data);
+    })
+  }
   //helper function for changing a knobs value 
   $scope.setKnob = function(i, val) {
     knobs[i].setValue(val);

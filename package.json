@@ -9,6 +9,7 @@
     "express": "^4.10.2",
     "fs": "0.0.1-security",
     "mongoose": "^5.9.1",
+    "node-spotify-api": "^1.1.1",
     "nodemon": "^2.0.2",
     "openweather-apis": "^4.2.0",
     "request": "^2.88.2",

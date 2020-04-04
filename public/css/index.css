@@ -367,9 +367,22 @@ h3.weather-element{
   transition: background-color .15s ease,border-color .15s ease,color .15s ease;
   border-width: 0;
   letter-spacing: 1.2px;
-  min-width: 120px;
   text-transform: uppercase;
   white-space: normal;
+}
+.btn:focus{
+  background-color: transparent!important;
+  border: 0px!important;
+  outline: 0!important;
+  outline: transparent!important;
+  outline: none;
+}
+.btn-outline-success:hover{
+  background-color: transparent!important;
+  outline: 0!important;
+  border: 0px!important;
+  outline: transparent!important;
+  outline: none;
 }
 @media only screen and (max-width: 800px) {
   .col-sm {
