@@ -105,6 +105,8 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
   $scope.dji = 0;
   $scope.test = "";
   $scope.arrow;
+  $scope.top = [];
+  $scope.arts= [];
   // Log in
   $scope.login = function(){
     $http.get("/authUrl/").then(function(data) {
@@ -205,6 +207,25 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
   $scope.getStats = function() {
     $http.get("/stats").then(function(data) {
       console.log(data);
+      $scope.top = [];
+      entry = [];
+      for(var i = 0;i <5;i++) {
+        var obj = data.data.data.body.items;
+        entry = [];
+        entry.push(obj[i].name);
+        entry.push(obj[i].artists[0].name);
+        entry.push(obj[i].album.name);
+        entry.push(msToHMS(obj[i].duration_ms));
+        $scope.top.push(entry);
+        var arts = data.data.data.body.previous;
+        entry = [];
+        entry.push(arts[i].name);
+        entry.push(arts[i].genres[0]);
+        entry.push(arts[i].followers.total);
+        entry.push(arts[i].popularity);
+        $scope.arts.push(entry);
+      }
+
     })
   }
   //helper function for changing a knobs value 

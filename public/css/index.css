@@ -384,6 +384,9 @@ h3.weather-element{
   outline: transparent!important;
   outline: none;
 }
+.stats{
+  color:white;
+}
 @media only screen and (max-width: 800px) {
   .col-sm {
     width: 40vw;
