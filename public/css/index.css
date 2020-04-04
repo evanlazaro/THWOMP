@@ -320,10 +320,32 @@ h3.weather-element{
   margin-right: auto;
   margin-left: auto;
 }
+.playlist-smol{
+  display: none;
+}
+.inline-title{
+  display: inline;
+  vertical-align: middle;
+  padding-left: 20px;
+}
 @media only screen and (max-width: 800px) {
   .col-sm {
     width: 40vw;
     flex: none;
+  }
+  .playlist{
+    display: none;
+  }
+  .playlist-smol{
+    display:block;
+    margin: 10px auto 10px auto;
+    width: 90%;
+    font-size: 2em;
+    font-weight: 800;
+  }
+  .navbar-weather{
+    visibility: hidden;
+    display:none;
   }
 }
 @keyframes animatezoom {
