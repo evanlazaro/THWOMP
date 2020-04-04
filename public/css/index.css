@@ -20,13 +20,22 @@ nav{
   margin-left: 6px;
   margin-right: 9px;
 }
+.nav-link {
+  color: white!important;
+  line-height: 1.5;
+  border-radius: 500px;
+  transition: background-color .15s ease,border-color .15s ease,color .15s ease;
+  border-width: 0;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  white-space: normal;
+}
 .active{
-  color: #1DB954!important;
-  font-weight: bold;
+  color: #2ebd59!important;
 }
 
 .bg-dark{
-  background-color: #212121 !important;
+  background-color: #141414 !important;
 }
 .text-dark{
   color: #212121 !important;
@@ -155,7 +164,7 @@ h1 {
   padding-top: 60px;
 }
 .modal-content {
-  background-color: #333333;
+  background-color: #212121;
   margin: 5% auto 15% auto;
   border: 1px solid #111111;
   width: 80%;
@@ -242,6 +251,15 @@ h4{
   border-color: white transparent transparent transparent;
 }
 .nav-weather{
+  color: white!important;
+  line-height: 1.5;
+  border-radius: 500px;
+  transition: background-color .15s ease,border-color .15s ease,color .15s ease;
+  border-width: 0;
+  letter-spacing: 1.2px;
+  font-weight: 100!important;
+  text-transform: uppercase;
+  white-space: normal;
   margin: 0 auto;
   height:50px;
   overflow: hidden;
@@ -250,10 +268,12 @@ h4{
   display: inline-block;
 }
 h3.weather-element{
+  font-weight: 100!important;
   vertical-align: sub;
 }
 .modal-weather{
   margin-top: 25px;
+  height: 100px;
 }
 .modal-element{
   font-size: 2.4em;
@@ -329,6 +349,27 @@ h3.weather-element{
   display: inline;
   vertical-align: middle;
   padding-left: 20px;
+}
+.btn-primary{
+  color:white;
+}
+.btn-outline-success{
+  color: white;
+}
+.btn-outline-success:hover{
+  color: #2ebd59;
+  background-color: transparent;
+}
+.btn{
+  font-size: 18px;
+  line-height: 1.5;
+  border-radius: 500px;
+  transition: background-color .15s ease,border-color .15s ease,color .15s ease;
+  border-width: 0;
+  letter-spacing: 1.2px;
+  min-width: 120px;
+  text-transform: uppercase;
+  white-space: normal;
 }
 @media only screen and (max-width: 800px) {
   .col-sm {
