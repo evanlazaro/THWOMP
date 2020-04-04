@@ -5,7 +5,9 @@
 	<link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
 	<meta charset="utf-8">
 	<!-- Angular, bootstrap, jquery, fonts, and style -->
+	
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="js/pureknob.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
@@ -14,6 +16,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:800&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	
 	<script type="text/javascript" src="js/index.js"></script>
 	<link rel="icon" type="image/png" sizes="16x16" href="favicon.ico">
 </head>
@@ -25,18 +28,17 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title">Name Your Preset</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
+					<div type="button" ng-click="weather_view=0" class="close-container" data-dismiss="modal" aria-label="Close">
+						<span class="close-modal" aria-hidden="true">&times;</span>
+					</div>
 				</div>
 				<div class="modal-body">
 					<form>
-						<input type="text" class="form-control" id="userPresetNameInput" placeholder="Enter Preset Name" />
+						<input type="text" class="form-control form-control-dark-wide" id="userPresetNameInput" placeholder="Enter Preset Name" />
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" ng-click="saveUserPreset()">Save changes</button>
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-outline-success" ng-click="saveUserPreset()">Save changes</button>
 				</div>
 				</div>
 			</div>
@@ -45,7 +47,7 @@
 
 	<!-- Create playlist popup -->
 	<div id="playlist-editor" class="modal">
-		<form class="modal-content animate" ng-submit="playlist()" method="post">
+		<form class="modal-content animate" ng-submit="playlist(songname)" method="post">
 			<div class="nav-weather modal-weather">
 				<h3 class="weather-element modal-element">{{dji | number : 2}}%</h3>
 				<img class="weather-element nav-arrow" ng-src="{{arrow}}">
@@ -55,6 +57,9 @@
 			</div>
 			<div class="close-container">
 			<span ng-click="weather_view=0" onclick="document.getElementById('playlist-editor').style.display='none'" class="close-modal" title="Close Modal">&times;</span>
+			</div>
+			<div class="modal-body">
+				<input type="text" class="form-control form-control-dark" ng-model="songname" placeholder="Enter Song!" name="songname"/>
 			</div>
 			<div class="row modal-row text-center">
 				<div class="col-sm">
@@ -110,12 +115,10 @@
 					<div id="dial12"></div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col text-center">
-					<input class="btn btn-outline-success modal-btn" type="submit" value="Create Playlist" ng-click="weather_view=0;">
-				</div>
-				<div class="col text-center" ng-if="userInfo">
-					<input class="btn btn-outline-success modal-btn" value="Save Preset" data-toggle="modal" data-target="#userPresetNameModal" ng-click="getUserPresetName()">
+			<div class="modal-footer center">
+					<button class="btn btn-outline-success" type="submit" ng-click="weather_view=0;">Create Playlist</button>
+				<div ng-if="userInfo">
+					<button class="btn btn-outline-success" value="Save Preset" data-toggle="modal" data-target="#userPresetNameModal" ng-click="getUserPresetName()">Save Preset</button>
 				</div>
 			</div>
 		</form>
@@ -133,7 +136,7 @@
 			  <a class="nav-link active" id="home" ng-click="view=0;changeActive('home')" href="#">Home</a>
 			</li>
 			<li class="nav-item">
-			  <a class="nav-link" id="profile" ng-click="view=1;;changeActive('profile')" href="#">Profile</a>
+			  <a class="nav-link" id="profile" ng-click="view=1;changeActive('profile');getStats()" href="#">Profile</a>
 			</li>
 			</ul>
 			<div class="nav-weather">
@@ -161,8 +164,7 @@
 			<button class="btn btn-link text-center call" ng-click="weather_view=1" onclick="document.getElementById('playlist-editor').style.display='block'" style="width:auto;">Create Playlist! &raquo;</button>
 		  </div>
 		</div>
-
-		<div class="container">
+		<div id="playlist-titler" class="container">
 			  <div class="row text-light">
 				  <div class="img-col">
 					<img ng-src="{{playlistImg}}" class="playlist-img">
@@ -218,6 +220,9 @@
 				</div>
 			  </div>
 			</div>
+			<div class="playlist-smol">
+				<div class="inline-title" ng-bind-html="test"></div>
+			</div>
 		  </div>
 		</div>
 
@@ -232,7 +237,7 @@
 			</div>
 		</div>
 		<div class="container" ng-if="userInfo">
-			<h2 class="playlist-title">Latest Songs</h2>
+			<h2 class="playlist-title stats">Most Played</h2>
 			<div class="container">
 			  <div class="row text-light playlist head">
 				  <div class="col-">
@@ -251,7 +256,7 @@
 					  <h3>TIME</h3>
 				  </div>
 			  </div>
-			  <div ng-repeat="song in songs" class="row text-light playlist">
+			  <div ng-repeat="song in top" class="row text-light playlist">
 				  <div class="col-">
 					  <h3>{{$index+1}}</h3>
 				  </div>
@@ -271,11 +276,50 @@
 			</div>
 		  </div>
 		</div>
+		<div class="container" ng-if="userInfo">
+			<h2 class="playlist-title stats">Favourite Artists</h2>
+			<div class="container">
+			  <div class="row text-light playlist head">
+				  <div class="col-">
+					  <h3>#</h3>
+				  </div>
+				  <div class="col-sm">
+					  <h3>NAME</h3>
+				  </div>
+				  <div class="col-sm">
+					  <h3>GENRE</h3>
+				  </div>
+				  <div class="col-sm">
+					  <h3>FOLLOWERS</h3>
+				  </div>
+				  <div class="col-sm">
+					  <h3>POPULARITY</h3>
+				  </div>
+			  </div>
+			  <div ng-repeat="art in arts" class="row text-light playlist">
+				  <div class="col-">
+					  <h3>{{$index+1}}</h3>
+				  </div>
+				  <div class="col-sm">
+					  <h3> {{art[0]}} </h3>
+				  </div>
+				  <div class="col-sm">
+					  <h3>{{art[1]}}</h3>
+				  </div>
+				  <div class="col-sm">
+					  <h3>{{art[2]}}</h3>
+				  </div>
+				  <div class="col-sm">
+					  <h3>{{art[3]}}</h3>
+				  </div>
+			  </div>
+			</div>
+		  </div>
+		</div>
 	  </div>
 	</main>
 
 
 </body>
-<script src="js/pureknob.js"></script>
 <script src="js/index.js"></script>
 </html>

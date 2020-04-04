@@ -57,10 +57,14 @@ for(var i = 0; i < 12; i++){
 	// Create element node.
 	var node = knob.node();
 
-	// Add it to the DOM.
-	var elem1 = document.getElementById('dial'+(i+1));
-  elem1.appendChild(node);
-  dial_settings.push(50);
+  // Add it to the DOM.
+  var elem1 = document.getElementById('dial'+(i+1));
+  try{elem1.appendChild(node);
+    dial_settings.push(50);
+  } catch{
+    //
+  }
+  
 }
 
 // Convert ms to Hours/Minutes
@@ -98,8 +102,11 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
   $scope.playlists = [];
   $scope.currid = "home";
   $scope.weather = [];
-  $scope.dji = '0%';
+  $scope.dji = 0;
+  $scope.test = "";
   $scope.arrow;
+  $scope.top = [];
+  $scope.arts= [];
   // Log in
   $scope.login = function(){
     $http.get("/authUrl/").then(function(data) {
@@ -129,11 +136,13 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
   }
   // Display user's playlist given playlist number
   $scope.refreshPlaylist = function(index) {
+    console.log(index);
     $http.get("/playlists?index="+index).then(function(data) {
       // do something with the tracks
       console.log(data)
       $scope.playlists = [];
       $scope.songs = [];
+      $scope.test = $sce.trustAsHtml('<iframe src="https://open.spotify.com/embed/playlist/'+data.data.songs[index].id+'" width="500" height="700" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>');
       for(var i = 0; i < data.data.songs.size; i++) {
         $scope.playlists.push(data.data.songs[i].name);
       }
@@ -141,7 +150,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
       $scope.playlistName = data.data.songs.body.name;
       $scope.playlistCreator = data.data.songs.body.owner.display_name;
       if(data.data.songs.body.images.length > 0){
-        $scope.playlistImg = data.data.songs.body.images[1].url;
+        $scope.playlistImg = data.data.songs.body.images[0].url;
       } else {
         $scope.playlistImg ="noimage.png";
       }
@@ -193,6 +202,30 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
         $scope.arrow = 'arrow-green.png';
       else
         $scope.arrow = 'arrow-red.png';
+    })
+  }
+  $scope.getStats = function() {
+    $http.get("/stats").then(function(data) {
+      console.log(data);
+      $scope.top = [];
+      entry = [];
+      for(var i = 0;i <5;i++) {
+        var obj = data.data.data.body.items;
+        entry = [];
+        entry.push(obj[i].name);
+        entry.push(obj[i].artists[0].name);
+        entry.push(obj[i].album.name);
+        entry.push(msToHMS(obj[i].duration_ms));
+        $scope.top.push(entry);
+        var arts = data.data.data.body.previous;
+        entry = [];
+        entry.push(arts[i].name);
+        entry.push(arts[i].genres[0]);
+        entry.push(arts[i].followers.total);
+        entry.push(arts[i].popularity);
+        $scope.arts.push(entry);
+      }
+
     })
   }
   //helper function for changing a knobs value 
