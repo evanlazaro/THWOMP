@@ -466,6 +466,14 @@ button.btn.btn-outline-success:focus{
   width: 6px;
   float: left;
 }
+.bar-end-bottom{
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  background-color: #2ebd59;
+  width: 58px;
+  height: 6px;
+}
 .averages-container{
   scroll-padding-top: 25px;
   clear: both;
@@ -475,11 +483,24 @@ button.btn.btn-outline-success:focus{
   text-align: center;
 }
 .vert-bar {
+  position: relative;
+  vertical-align: top;
   display: inline-block;
   background-color: #333333;
   color: white; 
   width: 60px;
   border: 1px solid black;
+  font-size: 1rem;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  padding-top: 6px;
+  padding-right: 17px;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+.vert-bars{
+  width: fit-content;
 }
 @media only screen and (max-width: 800px) {
   .col-sm {
