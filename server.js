@@ -132,14 +132,35 @@ app.get('/stats', function(req, res) {
   spotifyApi.getMyTopTracks().then(function(data) {
     out = data;
     spotifyApi.getMyTopArtists().then(function(arts) {
-     // console.log(data);
-     console.log(out);
      out.body.previous = arts.body.items;
      res.json({data: out})
     }, function(err) {
       console.log('Something went wrong!', err);
     });
     //res.json({data: data})
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+})
+//get audio analysis for top tracks
+app.get('/stats/detailed', function(req, res) {
+  //no personalization endpoints in the npm
+  spotifyApi.getMyTopTracks().then(function(data) {;
+    var features = {0:"", 1:"", 2:"", 3:"", 4:""};
+    console.log(features);
+    var call_cnt = 0;
+    for(var i = 0; i < 5; i++) {
+      spotifyApi.getAudioFeaturesForTrack(data.body.items[i].id).then(function(arts) {
+        features[call_cnt] = arts;
+        call_cnt++;
+        if(call_cnt == 5){
+          console.log(features);
+          res.json({data:features});
+        }
+      }, function(err) {
+        console.log('Something went wrong!', err);
+      });
+    }
   }, function(err) {
     console.log('Something went wrong!', err);
   });
@@ -159,7 +180,6 @@ app.get('/weather' , function(req, res) {
           weather.setZipCode(body.postal);
           weather.setUnits('imperial');
           weather.getAllWeather(function(err, JSONObj){
-            console.log(JSONObj);
             res.json({weather: JSONObj})
           });
       }

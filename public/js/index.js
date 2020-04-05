@@ -236,7 +236,9 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
           entry.push('noimage.png');
         $scope.arts.push(entry);
       }
-
+    })
+    $http.get("/stats/detailed").then(function(data) {
+      console.log(data);
     })
   }
   //helper function for changing a knobs value 
