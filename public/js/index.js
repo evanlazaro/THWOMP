@@ -107,6 +107,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
   $scope.arrow;
   $scope.top = [];
   $scope.arts= [];
+  $scope.features = [];
   // Log in
   $scope.login = function(){
     $http.get("/authUrl/").then(function(data) {
@@ -208,14 +209,20 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
     $http.get("/stats").then(function(data) {
       console.log(data);
       $scope.top = [];
+      $scope.arts = [];
       entry = [];
-      for(var i = 0;i <5;i++) {
+      for(var i = 0; i < 5;i++) {
         var obj = data.data.data.body.items;
         entry = [];
         entry.push(obj[i].name);
         entry.push(obj[i].artists[0].name);
         entry.push(obj[i].album.name);
         entry.push(msToHMS(obj[i].duration_ms));
+        entry.push('{\'width\': \''+obj[i].popularity*6+'px\'}');
+        if(obj[i].album.images.length >=2)
+          entry.push(obj[i].album.images[2].url);
+        else 
+          entry.push('noimage.png');
         $scope.top.push(entry);
         var arts = data.data.data.body.previous;
         entry = [];
@@ -223,9 +230,38 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
         entry.push(arts[i].genres[0]);
         entry.push(arts[i].followers.total);
         entry.push(arts[i].popularity);
+        entry.push('{\'width\': \''+arts[i].popularity*6+'px\'}');
+        if(arts[i].images.length >=2)
+          entry.push(arts[i].images[2].url);
+        else 
+          entry.push('noimage.png');
         $scope.arts.push(entry);
       }
-
+    })
+    $http.get("/stats/detailed").then(function(data) {
+      $scope.features= [];
+      //dance,energy,key,loudness,mode,speechy,acousticy,intrumentaly,live,valence,tempo
+      var averages = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0];
+      var feat_cnt = 0;
+      for(var i = 0; i < 5; i++) {
+        feat_cnt = 0;
+        var x = data.data.data[i].body;
+        for(feat in x){
+          if(feat_cnt <= 10)
+            averages[feat_cnt] += (x[feat]/5);
+          feat_cnt++;
+        }
+      }
+      console.log(averages);
+      $scope.features.push(['{\'height\': \''+averages[0]*700+'px\'}','Danceability']);
+      $scope.features.push(['{\'height\': \''+averages[1]*700+'px\'}','Energy']);
+      $scope.features.push(['{\'height\': \''+averages[3]*-70+'px\'}','Loudness']);
+      $scope.features.push(['{\'height\': \''+averages[5]*700+'px\'}','Speechiness']);
+      $scope.features.push(['{\'height\': \''+averages[6]*700+'px\'}','Acousticness']);
+      $scope.features.push(['{\'height\': \''+averages[7]*700+'px\'}','Instrumentalness']);
+      $scope.features.push(['{\'height\': \''+averages[8]*700+'px\'}','Liveness']);
+      $scope.features.push(['{\'height\': \''+averages[9]*700+'px\'}','Valence']);
+      $scope.features.push(['{\'height\': \''+averages[10]*4+'px\'}','Tempo']);
     })
   }
   //helper function for changing a knobs value 
