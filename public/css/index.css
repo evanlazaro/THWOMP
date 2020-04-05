@@ -1,7 +1,6 @@
 html {
   font-family: 'Merriweather', serif;
 }
-
 body {
   color: #777777;
 }
@@ -296,15 +295,25 @@ h3.weather-element{
   outline: 0px;
   border-bottom: 1px #88ff88 solid;
 }
-
+.clock{
+  font-variant: tabular-nums;
+}
+h3.weather-element{
+  font-size: 18px;
+}
+h3.weather-element.modal-element{
+  font-size: 36px;
+}
 .nav-arrow{
   display: inline-block;
-  height: 20px;
+  height: 13px;
   width: auto;
   vertical-align: middle;
 }
-.modal-element .nav-arrow{
-  height: 30px;
+.weather-element.modal-element.nav-arrow{
+  height: 23px;
+  margin-left: 0px!important;
+  padding-bottom: 3px;
 }
 .middle{
   margin-right: -10px;
@@ -435,3 +444,4 @@ h3.weather-element{
 
   }
 }
+

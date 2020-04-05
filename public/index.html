@@ -50,7 +50,7 @@
 		<form class="modal-content animate" ng-submit="playlist(songname)" method="post">
 			<div class="nav-weather modal-weather">
 				<h3 class="weather-element modal-element">{{dji | number : 2}}%</h3>
-				<img class="weather-element nav-arrow" ng-src="{{arrow}}">
+				<img class="weather-element modal-element nav-arrow" ng-src="{{arrow}}">
 				<h3 class="weather-element modal-element middle">{{weather[0]}}&deg;</h3>
 				<img class="weather-element" ng-src={{weather[2]}}>
 				<h3 class="weather-element modal-element clock"></h3>
@@ -158,7 +158,7 @@
 
 	  <!-- Home page  -->
 	  <main role="main" ng-show="view==0">
-		<div class="jumbotron theme over">
+		<div class="jumbotron theme over slide">
 		  <div class="container">
 			<h1 class="display-3 text-dark">{{thwomp}}</h1>
 			<button class="btn btn-link text-center call" ng-click="weather_view=1" onclick="document.getElementById('playlist-editor').style.display='block'" style="width:auto;">Create Playlist! &raquo;</button>

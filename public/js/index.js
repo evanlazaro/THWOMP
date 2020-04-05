@@ -208,6 +208,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
     $http.get("/stats").then(function(data) {
       console.log(data);
       $scope.top = [];
+      $scope.arts = [];
       entry = [];
       for(var i = 0;i <5;i++) {
         var obj = data.data.data.body.items;
