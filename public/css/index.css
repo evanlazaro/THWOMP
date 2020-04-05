@@ -451,6 +451,18 @@ button.btn.btn-outline-success:focus{
   margin-left: 50%;
   float: right;
 }
+.bar-end{
+  background-color: #2ebd59;
+  height: 58px;
+  width: 6px;
+  float: right;
+}
+.bar-end-left{
+  background-color: #2ebd59;
+  height: 58px;
+  width: 6px;
+  float: left;
+}
 @media only screen and (max-width: 800px) {
   .col-sm {
     width: 40vw;
