@@ -236,87 +236,40 @@
 				<h1 class="display-3 text-dark" ng-if="!userInfo">Not logged in</h1>
 			</div>
 		</div>
-		<div class="container" ng-if="userInfo">
-			<h2 class="playlist-title stats">Most Played</h2>
-			<div class="container">
-			  <div class="row text-light playlist head">
-				  <div class="col-">
-					  <h3>#</h3>
-				  </div>
-				  <div class="col-sm">
-					  <h3> TITLE</h3>
-				  </div>
-				  <div class="col-sm">
-					  <h3>ARTIST</h3>
-				  </div>
-				  <div class="col-sm">
-					  <h3>ALBUM</h3>
-				  </div>
-				  <div class="col-sm">
-					  <h3>TIME</h3>
-				  </div>
-			  </div>
-			  <div ng-repeat="song in top" class="row text-light playlist">
-				  <div class="col-">
-					  <h3>{{$index+1}}</h3>
-				  </div>
-				  <div class="col-sm">
-					  <h3> {{song[0]}} </h3>
-				  </div>
-				  <div class="col-sm">
-					  <h3>{{song[1]}}</h3>
-				  </div>
-				  <div class="col-sm">
-					  <h3>{{song[2]}}</h3>
-				  </div>
-				  <div class="col-sm">
-					  <h3>{{song[3]}}</h3>
-				  </div>
-			  </div>
+		<div class="stats-container" ng-if="userInfo">
+			<div class="most-played">
+				<h2 class="playlist-title stats">Most Played</h2>
+				<div class="container">
+					<div ng-repeat="song in top" class="row bars">
+						<div class="bar" ng-style="{{song[4]}}">
+							<div class="image-wrapper">
+								<img class="bar-img" ng-src={{song[5]}}>
+							</div>
+							<div class="info-wrapper">
+								<h3 class="bar-title"> {{song[0]}} </h3>
+								<h3 class="bar-sub"> {{song[1]}}</h3>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-		  </div>
-		</div>
-		<div class="container" ng-if="userInfo">
-			<h2 class="playlist-title stats">Favourite Artists</h2>
-			<div class="container">
-			  <div class="row text-light playlist head">
-				  <div class="col-">
-					  <h3>#</h3>
-				  </div>
-				  <div class="col-sm">
-					  <h3>NAME</h3>
-				  </div>
-				  <div class="col-sm">
-					  <h3>GENRE</h3>
-				  </div>
-				  <div class="col-sm">
-					  <h3>FOLLOWERS</h3>
-				  </div>
-				  <div class="col-sm">
-					  <h3>POPULARITY</h3>
-				  </div>
-			  </div>
-			  <div ng-repeat="art in arts" class="row text-light playlist">
-				  <div class="col-">
-					  <h3>{{$index+1}}</h3>
-				  </div>
-				  <div class="col-sm">
-					  <h3> {{art[0]}} </h3>
-				  </div>
-				  <div class="col-sm">
-					  <h3>{{art[1]}}</h3>
-				  </div>
-				  <div class="col-sm">
-					  <h3>{{art[2]}}</h3>
-				  </div>
-				  <div class="col-sm">
-					  <h3>{{art[3]}}</h3>
-				  </div>
-			  </div>
+			<div class="fav-artists">
+				<h2 class="playlist-title stats bar-right">Favourite Artists</h2>
+				<div class="container">
+					<div ng-repeat="art in arts" class="row bars bars-right">
+						<div class="bar bar-right" ng-style="{{art[4]}}">
+							<div class="info-wrapper">
+								<h3 class="bar-title bar-right"> {{art[0]}} </h3>
+								<h3 class="bar-sub bar-right"> {{art[1]}}</h3>
+							</div>
+							<div class="image-wrapper">
+								<img class="bar-img bar-right" ng-src={{art[5]}}>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-		  </div>
 		</div>
-	  </div>
 	</main>
 
 

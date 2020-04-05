@@ -217,6 +217,11 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
         entry.push(obj[i].artists[0].name);
         entry.push(obj[i].album.name);
         entry.push(msToHMS(obj[i].duration_ms));
+        entry.push('{\'width\': \''+obj[i].popularity*6+'px\'}');
+        if(obj[i].album.images.length >=2)
+          entry.push(obj[i].album.images[2].url);
+        else 
+          entry.push('noimage.png');
         $scope.top.push(entry);
         var arts = data.data.data.body.previous;
         entry = [];
@@ -224,6 +229,11 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
         entry.push(arts[i].genres[0]);
         entry.push(arts[i].followers.total);
         entry.push(arts[i].popularity);
+        entry.push('{\'width\': \''+arts[i].popularity*6+'px\'}');
+        if(arts[i].images.length >=2)
+          entry.push(arts[i].images[2].url);
+        else 
+          entry.push('noimage.png');
         $scope.arts.push(entry);
       }
 
