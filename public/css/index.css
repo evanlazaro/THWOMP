@@ -444,6 +444,9 @@ button.btn.btn-outline-success:focus{
   width: 70%;
   margin: 20px auto;
 }
+.stats-container::after{
+  clear: both;
+}
 .bar-right{
   text-align: right;
 }
@@ -462,6 +465,21 @@ button.btn.btn-outline-success:focus{
   height: 58px;
   width: 6px;
   float: left;
+}
+.averages-container{
+  scroll-padding-top: 25px;
+  clear: both;
+  width: 100%;
+}
+.analysis{
+  text-align: center;
+}
+.vert-bar {
+  display: inline-block;
+  background-color: #333333;
+  color: white; 
+  width: 60px;
+  border: 1px solid black;
 }
 @media only screen and (max-width: 800px) {
   .col-sm {

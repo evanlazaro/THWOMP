@@ -107,6 +107,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
   $scope.arrow;
   $scope.top = [];
   $scope.arts= [];
+  $scope.features = [];
   // Log in
   $scope.login = function(){
     $http.get("/authUrl/").then(function(data) {
@@ -210,7 +211,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
       $scope.top = [];
       $scope.arts = [];
       entry = [];
-      for(var i = 0;i <5;i++) {
+      for(var i = 0; i < 5;i++) {
         var obj = data.data.data.body.items;
         entry = [];
         entry.push(obj[i].name);
@@ -238,7 +239,21 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
       }
     })
     $http.get("/stats/detailed").then(function(data) {
-      console.log(data);
+      console.log(data.data.data[0].body);
+      var averages = [0,0,0,0,0,0,0,0,0,0,0];
+      var feat_cnt = 0;
+      for(var i = 0; i < 5; i++) {
+        var x = data.data.data[i].body;
+        for(feat in x){
+          console.log(x[feat]);
+          if(feat_cnt <= 10)
+            averages[feat_cnt] += (x[feat]/5);
+          feat_cnt++;
+        }
+      }
+      console.log(averages);
+     
+      $scope.features = ['{\'height\': \'100px\'}','{height: 1px}','{height:22px}','{height: 30px}'];
     })
   }
   //helper function for changing a knobs value 
