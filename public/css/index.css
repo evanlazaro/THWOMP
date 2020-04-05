@@ -475,7 +475,7 @@ button.btn.btn-outline-success:focus{
   height: 6px;
 }
 .averages-container{
-  scroll-padding-top: 25px;
+  padding-top: 25px;
   clear: both;
   width: 100%;
 }
