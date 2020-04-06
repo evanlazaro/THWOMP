@@ -54,7 +54,7 @@ function PureKnob() {
 			 * Properties of this bar graph.
 			 */
 			'_properties': {
-				'colorBG': '#181818',
+				'colorBG': '#111111',
 				'colorFG': '#ff8800',
 				'colorMarkers': '#888888',
 				'markerStart': 0,
@@ -366,7 +366,7 @@ function PureKnob() {
 				'angleEnd': 2.0 * Math.PI,
 				'angleOffset': -0.5 * Math.PI,
 				'angleStart': 0,
-				'colorBG': '#181818',
+				'colorBG': '#111111',
 				'colorFG': '#ff8800',
 				'colorLabel': '#ffffff',
 				'fnStringToValue': function(string) { return parseInt(string); },

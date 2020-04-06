@@ -4,34 +4,148 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
 	<meta charset="utf-8">
-	<!-- Angular, bootstrap, and jquery -->
+	<!-- Angular, bootstrap, jquery, fonts, and style -->
+	
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="js/pureknob.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
 	<link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	
 	<script type="text/javascript" src="js/index.js"></script>
 	<link rel="icon" type="image/png" sizes="16x16" href="favicon.ico">
 </head>
-<body ng-controller="mainController" class="bg-dark">
+<body ng-controller="mainController" class="bg-dark" ng-init="user();refreshPlaylist(0);getWeather();setKnobs();getStocks()">
 
-	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" ng-init="user();refreshPlaylist()">
+	<!-- Save user preferences popup -->
+	<div id="userPresetNameModal" class="modal fade" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Name Your Preset</h5>
+					<div type="button" ng-click="weather_view=0" class="close-container" data-dismiss="modal" aria-label="Close">
+						<span class="close-modal" aria-hidden="true">&times;</span>
+					</div>
+				</div>
+				<div class="modal-body">
+					<form>
+						<input type="text" class="form-control form-control-dark-wide" id="userPresetNameInput" placeholder="Enter Preset Name" />
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-success" ng-click="saveUserPreset()">Save changes</button>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Create playlist popup -->
+	<div id="playlist-editor" class="modal">
+		<form class="modal-content animate" ng-submit="playlist(songname)" method="post">
+			<div class="nav-weather modal-weather">
+				<h3 class="weather-element modal-element">{{dji | number : 2}}%</h3>
+				<img class="weather-element modal-element nav-arrow" ng-src="{{arrow}}">
+				<h3 class="weather-element modal-element middle">{{weather[0]}}&deg;</h3>
+				<img class="weather-element" ng-src={{weather[2]}}>
+				<h3 class="weather-element modal-element clock"></h3>
+			</div>
+			<div class="close-container">
+			<span ng-click="weather_view=0" onclick="document.getElementById('playlist-editor').style.display='none'" class="close-modal" title="Close Modal">&times;</span>
+			</div>
+			<div class="modal-body">
+				<input type="text" class="form-control form-control-dark" ng-model="songname" placeholder="Enter Song!" name="songname"/>
+			</div>
+			<div class="row modal-row text-center">
+				<div class="col-sm">
+					<h4>Key <sup class="fa fa-info-circle tooltip_"><span class="tooltiptext" style="font-family: Montserrat;">	The estimated overall key of the track. Integers map to pitches using standard Pitch Class notation . E.g. 0 = C, 1 = C♯/D♭, 2 = D, and so on. If no key was detected, the value is -1.</span></sup></h4>
+					<div id="dial1"></div>
+				</div>
+				<div class="col-sm">
+					<h4>Key Confidence <sup class="fa fa-info-circle tooltip_"><span class="tooltiptext" style="font-family: Montserrat;">Determines how strictly the song adheres to the chosen key signature</span></sup></h4>
+					<div id="dial2"></div>
+				</div>
+				<div class="col-sm">
+					<h4>Tempo <sup class="fa fa-info-circle tooltip_"><span class="tooltiptext" style="font-family: Montserrat;">he overall estimated tempo of a track in beats per minute (BPM). In musical terminology, tempo is the speed or pace of a given piece and derives directly from the average beat duration.</span></sup></h4>
+					<div id="dial3"></div>
+				</div>
+				<div class="col-sm">
+					<h4>Tempo Confidence <sup class="fa fa-info-circle tooltip_"><span class="tooltiptext" style="font-family: Montserrat;">Determines how strictly the song adheres to the chosen tempo</span></sup></h4>
+					<div id="dial4"></div>
+				</div>
+			</div>
+			<div class="row modal-row text-center">
+				<div class="col-sm">
+					<h4>Instrumentalness <sup class="fa fa-info-circle tooltip_"><span class="tooltiptext" style="font-family: Montserrat;">	Predicts whether a track contains no vocals. “Ooh” and “aah” sounds are treated as instrumental in this context. Rap or spoken word tracks are clearly “vocal”. The closer the instrumentalness value is to 1.0, the greater likelihood the track contains no vocal content. Values above 0.5 are intended to represent instrumental tracks, but confidence is higher as the value approaches 1.0.</span></sup></h4>
+					<div id="dial5"></div>
+				</div>
+				<div class="col-sm">
+					<h4>Liveness <sup class="fa fa-info-circle tooltip_"><span class="tooltiptext" style="font-family: Montserrat;">	Detects the presence of an audience in the recording. Higher liveness values represent an increased probability that the track was performed live. A value above 0.8 provides strong likelihood that the track is live.</span></sup></h4>
+					<div id="dial6"></div>
+				</div>
+				<div class="col-sm">
+					<h4>Loudness <sup class="fa fa-info-circle tooltip_"><span class="tooltiptext" style="font-family: Montserrat;">	The overall loudness of a track in decibels (dB). Loudness values are averaged across the entire track and are useful for comparing relative loudness of tracks. Loudness is the quality of a sound that is the primary psychological correlate of physical strength (amplitude). Values typical range between -60 and 0 db.</span></sup></h4>
+					<div id="dial7"></div>
+				</div>
+				<div class="col-sm">
+					<h4>Energy <sup class="fa fa-info-circle tooltip_"><span class="tooltiptext" style="font-family: Montserrat;">	Energy is a measure from 0.0 to 1.0 and represents a perceptual measure of intensity and activity. Typically, energetic tracks feel fast, loud, and noisy. For example, death metal has high energy, while a Bach prelude scores low on the scale. Perceptual features contributing to this attribute include dynamic range, perceived loudness, timbre, onset rate, and general entropy.</span></sup></h4>
+					<div id="dial8"></div>
+				</div>
+			</div>
+			<div class="row text-center">
+				<div class="col-sm">
+					<h4>Speechiness <sup class="fa fa-info-circle tooltip_"><span class="tooltiptext" style="font-family: Montserrat;">Speechiness detects the presence of spoken words in a track. The more exclusively speech-like the recording (e.g. talk show, audio book, poetry), the closer to 1.0 the attribute value. Values above 0.66 describe tracks that are probably made entirely of spoken words. Values between 0.33 and 0.66 describe tracks that may contain both music and speech, either in sections or layered, including such cases as rap music. Values below 0.33 most likely represent music and other non-speech-like tracks.</span></sup></h4>
+					<div id="dial9"></div>
+				</div>
+				<div class="col-sm">
+					<h4>Valence <sup class="fa fa-info-circle tooltip_"><span class="tooltiptext" style="font-family: Montserrat;">A measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track. Tracks with high valence sound more positive (e.g. happy, cheerful, euphoric), while tracks with low valence sound more negative (e.g. sad, depressed, angry).</span></sup></h4>
+					<div id="dial10"></div>
+				</div>
+				<div class="col-sm">
+					<h4>Danceability <sup class="fa fa-info-circle tooltip_"><span class="tooltiptext" style="font-family: Montserrat;">	Danceability describes how suitable a track is for dancing based on a combination of musical elements including tempo, rhythm stability, beat strength, and overall regularity. A value of 0.0 is least danceable and 1.0 is most danceable.</span></sup></h4>
+					<div id="dial11"></div>
+				</div>
+				<div class="col-sm">
+					<h4>Acousticness <sup class="fa fa-info-circle tooltip_"><span class="tooltiptext" style="font-family: Montserrat;">A confidence measure from 0.0 to 1.0 of whether the track is acoustic. 1.0 represents high confidence the track is acoustic.</span></sup></h4>
+					<div id="dial12"></div>
+				</div>
+			</div>
+			<div class="modal-footer center">
+					<button class="btn btn-outline-success" type="submit" ng-click="weather_view=0;">Create Playlist</button>
+				<div ng-if="userInfo">
+					<button class="btn btn-outline-success" value="Save Preset" data-toggle="modal" data-target="#userPresetNameModal" ng-click="getUserPresetName()">Save Preset</button>
+				</div>
+			</div>
+		</form>
+		</div>
+
+	<!-- Navigation bar -->
+	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 		<a class="navbar-brand" href="#"><img src="favicon.ico" height="27" width="27"></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
 		  <span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarsExampleDefault">
-		  <ul class="navbar-nav mr-auto">
-			<li class="nav-item active">
-			  <a class="nav-link" ng-click="view=0" href="#">Home <span class="sr-only">(current)</span></a>
+		  <ul class="navbar-nav">
+			<li class="nav-item">
+			  <a class="nav-link active" id="home" ng-click="view=0;changeActive('home')" href="#">Home</a>
 			</li>
 			<li class="nav-item">
-			  <a class="nav-link" ng-click="view=1" href="#">Profile</a>
+			  <a class="nav-link" id="profile" ng-click="view=1;changeActive('profile');getStats()" href="#">Profile</a>
 			</li>
-		  </ul>
+			</ul>
+			<div class="nav-weather">
+				<h3 class="weather-element" ng-show="weather_view==0">{{dji | number : 2}}%</h3>
+				<img class="weather-element nav-arrow" ng-show="weather_view==0" ng-src="{{arrow}}">
+				<h3 class="weather-element middle" ng-show="weather_view==0">{{weather[0]}}&deg;</h3>
+				<img class="weather-element" ng-show="weather_view==0" ng-src={{weather[1]}}>
+				<h3 class="weather-element clock" ng-show="weather_view==0"></h3>
+			</div>
 			<form class="form-inline my-2 my-lg-0" ng-if="!userInfo" ng-submit="login()">
 				<input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Login">
 			</form>
@@ -42,25 +156,31 @@
 		</div>
 	  </nav>
 
+	  <!-- Home page  -->
 	  <main role="main" ng-show="view==0">
-		<div class="jumbotron theme over">
+		<div class="jumbotron theme over slide">
 		  <div class="container">
 			<h1 class="display-3 text-dark">{{thwomp}}</h1>
-			<button class="btn btn-link text-center call" onclick="document.getElementById('playlist-editor').style.display='block'" style="width:auto;">Create Playlist! &raquo;</button>
+			<button class="btn btn-link text-center call" ng-click="weather_view=1" onclick="document.getElementById('playlist-editor').style.display='block'" style="width:auto;">Create Playlist! &raquo;</button>
 		  </div>
 		</div>
-
-		<div class="container">
+		<div id="playlist-titler" class="container">
 			  <div class="row text-light">
 				  <div class="img-col">
-					<img src="{{playlistImg}}" class="playlist-img">
+					<img ng-src="{{playlistImg}}" class="playlist-img">
 				  </div>
 				  <div class="col">
-					  <br />
-					  <h4 class="playlist-accent">PLAYLIST</h4>
+						<br />
+						<div class="dropdown">
+							<h4 class="playlist-accent">CHOOSE PLAYLIST&#9662;</h4>
+							<div class="arrow-up"></div>
+							<div class="dropdown-content">
+								<a ng-repeat="playlist in playlists" ng-click="refreshPlaylist($index)" href="#">{{playlist}}</a>
+							</div>
+						</div>
 					  <h2 class="playlist-title">{{playlistName}}</h2>
 					  <p class="playlist-description">{{playlistDescription}}</p>
-					  <p class="playlist-description">Created by {{playlistCreator}} &middot; {{songs.length}} songs, {{playlistDuration}}  <button class="btn btn-link edit" onclick="document.getElementById('playlist-editor').style.display='block'" style="width:auto;">Edit &raquo;</button></p>
+					  <p class="playlist-description">Created by {{playlistCreator}} &middot; {{songs.length}} songs, {{playlistDuration}}  <button class="btn btn-link edit" ng-show="weather_view==1" onclick="document.getElementById('playlist-editor').style.display='block'" style="width:auto;">Edit &raquo;</button></p>
 				  </div>
 			  </div>
 			  <div class="container">
@@ -100,75 +220,15 @@
 				</div>
 			  </div>
 			</div>
+			<div class="playlist-smol">
+				<div class="inline-title" ng-bind-html="test"></div>
+			</div>
 		  </div>
 		</div>
 
-		<div id="playlist-editor" class="modal">
-
-			<form class="modal-content animate" ng-submit="playlist()" method="post">
-			  <div class="close-container">
-				<span onclick="document.getElementById('playlist-editor').style.display='none'" class="close-modal" title="Close Modal">&times;</span>
-			  </div>
-				<div class="row modal-row text-center">
-					<div class="col-sm">
-						<h4>Key</h3>
-						<div id="dial1"></div>
-					</div>
-					<div class="col-sm">
-						<h4>Key Confidence</h3>
-						<div id="dial2"></div>
-					</div>
-					<div class="col-sm">
-						<h4>Tempo</h3>
-						<div id="dial3"></div>
-					</div>
-					<div class="col-sm">
-						<h4>Tempo Confidence</h3>
-						<div id="dial4"></div>
-					</div>
-				</div>
-				<div class="row modal-row text-center">
-					<div class="col-sm">
-						<h4>Instrumentalness</h3>
-						<div id="dial5"></div>
-					</div>
-					<div class="col-sm">
-						<h4>Liveness</h3>
-						<div id="dial6"></div>
-					</div>
-					<div class="col-sm">
-						<h4>Loudness</h3>
-						<div id="dial7"></div>
-					</div>
-					<div class="col-sm">
-						<h4>Energy</h3>
-						<div id="dial8"></div>
-					</div>
-				</div>
-				<div class="row text-center">
-					<div class="col-sm">
-						<h4>Speechiness</h3>
-						<div id="dial9"></div>
-					</div>
-					<div class="col-sm">
-						<h4>Valence</h3>
-						<div id="dial10"></div>
-					</div>
-					<div class="col-sm">
-						<h4>Danceability</h3>
-						<div id="dial11"></div>
-					</div>
-					<div class="col-sm">
-						<h4>Acousticness</h3>
-						<div id="dial12"></div>
-					</div>
-				</div>
-				<input class="btn btn-outline-success modal-btn" type="submit" value="Create Playlist!">
-			</form>
-		  </div>
-
 	  </main>
 
+	<!-- Profile page -->
 	<main role="main" ng-show="view==1">
 		<div class="jumbotron theme over">
 			<div class="container">
@@ -176,51 +236,56 @@
 				<h1 class="display-3 text-dark" ng-if="!userInfo">Not logged in</h1>
 			</div>
 		</div>
-		<div class="container" ng-if="userInfo">
-			<h2 class="playlist-title">Latest Songs</h2>
-			<div class="container">
-			  <div class="row text-light playlist head">
-				  <div class="col-">
-					  <h3>#</h3>
-				  </div>
-				  <div class="col-sm">
-					  <h3> TITLE</h3>
-				  </div>
-				  <div class="col-sm">
-					  <h3>ARTIST</h3>
-				  </div>
-				  <div class="col-sm">
-					  <h3>ALBUM</h3>
-				  </div>
-				  <div class="col-sm">
-					  <h3>TIME</h3>
-				  </div>
-			  </div>
-			  <div ng-repeat="song in songs" class="row text-light playlist">
-				  <div class="col-">
-					  <h3>{{$index+1}}</h3>
-				  </div>
-				  <div class="col-sm">
-					  <h3> {{song[0]}} </h3>
-				  </div>
-				  <div class="col-sm">
-					  <h3>{{song[1]}}</h3>
-				  </div>
-				  <div class="col-sm">
-					  <h3>{{song[2]}}</h3>
-				  </div>
-				  <div class="col-sm">
-					  <h3>{{song[3]}}</h3>
-				  </div>
-			  </div>
+		<div class="stats-container" ng-if="userInfo">
+			<div class="most-played">
+				<h2 class="playlist-title stats">Most Played</h2>
+				<div class="container">
+					<div ng-repeat="song in top" class="row bars">
+						<div class="bar" ng-style="{{song[4]}}">
+							<div class="image-wrapper">
+								<img class="bar-img" ng-src={{song[5]}}>
+							</div>
+							<div class="info-wrapper">
+								<h3 class="bar-title"> {{song[0]}} </h3>
+								<h3 class="bar-sub"> {{song[1]}}</h3>
+							</div>
+							<div class="bar-end"></div>
+						</div>
+					</div>
+				</div>
 			</div>
-		  </div>
+			<div class="fav-artists">
+				<h2 class="playlist-title stats bar-right">Favourite Artists</h2>
+				<div class="container">
+					<div ng-repeat="art in arts" class="row bars bars-right">
+						<div class="bar bar-right" ng-style="{{art[4]}}">
+							<div class="bar-end-left"></div>
+							<div class="info-wrapper">
+								<h3 class="bar-title bar-right"> {{art[0]}} </h3>
+								<h3 class="bar-sub bar-right"> {{art[1]}}</h3>
+							</div>
+							<div class="image-wrapper">
+								<img class="bar-img bar-right" ng-src={{art[5]}}>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-	  </div>
+		<div class="stats-container" ng-if="userInfo">
+			<div class="averages-container">
+				<h2 class="playlist-title stats analysis">Audio Analysis</h2>
+				<div class="container vert-bars">
+					<div class="vert-bar" ng-repeat="feature in features" ng-style="{{feature[0]}}">
+						{{feature[1]}}
+						<div class="bar-end-bottom"></div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</main>
 
 
 </body>
-<script src="js/pureknob.js"></script>
 <script src="js/index.js"></script>
 </html>

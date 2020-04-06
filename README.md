@@ -9,11 +9,10 @@ THOWMP, also known as the Obscure music picker, is a tool used to explore music 
 ## Installing
 
 1. Run `npm install` in the project root
-2. Create a file `.env` with values for `CLIENT_ID` and `CLIENT_SECRET` (reach out to developer for values)
-
-## Running the tests
-
-TODO
+2. Create a file `.env` with values for:
+    * `CLIENT_ID`, `CLIENT_SECRET` - spotify API
+    * `OPEN_KEY` - openweathermap API
+    * `MONGO_URI` - MongoDB connection
 
 ## Deployment
 
