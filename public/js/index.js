@@ -181,6 +181,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
       console.log(data.data.weather);
     })
   }
+  // Get stock information
   $scope.getStocks = function() {
     $http.get("/stonks").then(function(data) {
       var count = 0;
@@ -205,6 +206,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
         $scope.arrow = 'arrow-red.png';
     })
   }
+  // Get stats about user
   $scope.getStats = function() {
     $http.get("/stats").then(function(data) {
       console.log(data);

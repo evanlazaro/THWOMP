@@ -59,6 +59,7 @@ var scopes = ["user-read-private", "user-read-email","playlist-read-private", "p
 // need to redirect user to the authorization URL
 var authorizeURL = spotifyApi.createAuthorizeURL(scopes);
 
+var USERID;
 
 app.use(express.static('public'));
 
@@ -96,6 +97,7 @@ app.get('/userInfo/', function(req, res){
     }, function(err) {
       return null;
     }).then( function(result){
+      USERID = result["id"];
       res.json( { user: result } );
     });
 });
@@ -195,8 +197,8 @@ app.get('/stonks' , function(req, res) {
 
 // Retrieve presets for current user
 app.get('/user_presets', function(req, res){
-  mongoose.model('user_presets').find(function(err, user_presets){
-    res.send(user_presets);
+  mongoose.model('user_presets').find( {user_id: USERID }, function(err, data){
+    res.send(data);
   })
 })
 
