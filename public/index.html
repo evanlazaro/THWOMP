@@ -40,11 +40,31 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-outline-success" ng-click="saveUserPreset()">Save changes</button>
 				</div>
-				</div>
 			</div>
 		</div>
 	</div>
 
+	<!-- Save recommended playlist popup -->
+	<div id="userPlaylistNameModal" class="modal fade" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Name Your Playlist</h5>
+					<div type="button" ng-click="weather_view=0" class="close-container" data-dismiss="modal" aria-label="Close">
+						<span class="close-modal" aria-hidden="true">&times;</span>
+					</div>
+				</div>
+				<div class="modal-body">
+					<form>
+						<input type="text" class="form-control form-control-dark-wide" id="userPlaylistNameInput" placeholder="Enter Playlist Name" />
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-success" ng-click="getRecPlaylist()">Generate Playlist</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<!-- Create playlist popup -->
 	<div id="playlist-editor" class="modal">
 		<form class="modal-content animate" ng-submit="playlist(songname)" method="post">
@@ -116,7 +136,7 @@
 				</div>
 			</div>
 			<div class="modal-footer center">
-					<button class="btn btn-outline-success" type="submit" ng-click="weather_view=0;">Create Playlist</button>
+					<button class="btn btn-outline-success" data-toggle="modal" data-target="#userPlaylistNameModal" type="submit" ng-click="weather_view=0; getUserPresetName()">Create Playlist</button>
 				<div ng-if="userInfo">
 					<button class="btn btn-outline-success" value="Save Preset" data-toggle="modal" data-target="#userPresetNameModal" ng-click="getUserPresetName()">Save Preset</button>
 				</div>

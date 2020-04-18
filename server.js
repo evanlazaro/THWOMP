@@ -47,7 +47,7 @@ var user_presetsSchema = new Schema({
 var User_preset = mongoose.model('user_presets', user_presetsSchema);
 
 // initialize spotify api
-var SpotifyWebApi = require('spotify-web-api-node2');
+var SpotifyWebApi = require('spotify-web-api-node');
 
 var spotifyApi = new SpotifyWebApi({
  clientId: process.env.CLIENT_ID,
@@ -202,23 +202,28 @@ app.get('/user_presets', function(req, res){
   })
 })
 
+var getUserPreset = function(info) {
+  var preset = new User_preset();
+  preset.user_id = info.id;
+  preset.name = info.name;
+  preset.key = info.key;
+  preset.key_confidence = info.key_confidence;
+  preset.tempo = info.tempo;
+  preset.tempo_confidence = info.tempo_confidence;
+  preset.instrumentalness = info.instrumentalness;
+  preset.liveness = info.liveness;
+  preset.loudness = info.loudness;
+  preset.energy = info.energy;
+  preset.speechiness = info.speechiness;
+  preset.valence = info.valence;
+  preset.danceability = info.danceability;
+  preset.acousticness = info.acousticness;
+  return preset;
+
+}
 // Add new user preset to database
 app.post('/newUserPreset', function(req, res){
-  var preset = new User_preset();
-  preset.user_id = req.body.id;
-  preset.name = req.body.name;
-  preset.key = req.body.key;
-  preset.key_confidence = req.body.key_confidence;
-  preset.tempo = req.body.tempo;
-  preset.tempo_confidence = req.body.tempo_confidence;
-  preset.instrumentalness = req.body.instrumentalness;
-  preset.liveness = req.body.liveness;
-  preset.loudness = req.body.loudness;
-  preset.energy = req.body.energy;
-  preset.speechiness = req.body.speechiness;
-  preset.valence = req.body.valence;
-  preset.danceability = req.body.danceability;
-  preset.acousticness = req.body.acousticness;
+  var preset = getUserPreset(req.body)
   preset.save(function(err, savedObject){
     if (err){
       console.log(err);
@@ -230,8 +235,40 @@ app.post('/newUserPreset', function(req, res){
   });
 });
 
+app.post('/recommendedPlaylist', function(req, res) {
+  var preset = getUserPreset(req.body);
+  // generate recommendations
+  // TODO: change seed tracks to match some user input, and add min/max values for the varios attributes
+  spotifyApi.getRecommendations({limit: 50, seed_tracks: ['3yYk5jhpqHF6lpIyvjhTRZ'], 
+  min_tempo: preset.tempo-15, max_tempo: preset.tempo + 15}).then(function(recs) {
+      // collect the uris of each song to add to playlist
+      var uriArr = [];
+      for(var i=0; i < recs.body.tracks.length;i++) {
+        uriArr.push(recs.body.tracks[i].uri)
+      }
+      // create the playlist
+      spotifyApi.createPlaylist(USERID, preset.name, {public: true}).then(function(info) {
+        var playlistId = info.body.id;
+        // add tracks
+        spotifyApi.addTracksToPlaylist(playlistId, uriArr).then(function() {
+          console.log("Successfully added tracks!");
+        }).catch(function(err) {
+          console.log('Something went wrong when adding tracks to the playlist!', err);
+        })
+
+      }).catch(function(err) {
+        console.log('Something went wrong when creating the playlist!', err);
+      })
+
+  }).catch(function(err) {
+      console.log('Something went3 wrong when getting recommendations!', err);
+  })
+
+});
+
 app.use(express.static('public'));
 
 http.listen(3000, function(){
     console.log('\nServer up on *:3000');
-  });
+});
+
