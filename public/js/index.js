@@ -287,11 +287,8 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
   $scope.getUserPresetName = function (){
     document.getElementById('playlist-editor').style.display='none';
   }
-  // POST user preferences
-  $scope.saveUserPreset = async function(){
-    var name = jq('#userPresetNameInput').val();
-    jq('#userPresetNameModal').modal('hide');
-    jq('#playlist-editor').modal('show');
+
+  var getUserPreset = function(name) {
     var knobs = getKnobValues();
     var data = {
       id: $scope.userInfo.id,
@@ -309,6 +306,15 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
       danceability: knobs[10],
       acousticness: knobs[11]
     };
+    return data;
+
+  }
+  // POST user preferences
+  $scope.saveUserPreset = async function(){
+    var name = jq('#userPresetNameInput').val();
+    jq('#userPresetNameModal').modal('hide');
+    jq('#playlist-editor').modal('show');
+    var data = getUserPreset(name);
     var options = {
       method: 'POST',
       headers: {
@@ -324,5 +330,16 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
     document.getElementById($scope.currid).className = 'nav-link'; 
     document.getElementById(id).className = 'nav-link active';
     $scope.currid = id;
-}
+  }
+
+  $scope.getRecPlaylist = function() {
+    var name = jq('#userPlaylistNameInput').val();
+    jq('#userPlaylistNameModal').modal('hide');
+    var data = getUserPreset(name);
+  
+    $http.post('/recommendedPlaylist', data).then(function(res) {
+      // TODO: update view/inform user that playlist was created
+    })
+
+  }
 }]);

@@ -12,7 +12,7 @@
     "nodemon": "^2.0.2",
     "openweather-apis": "^4.2.0",
     "request": "^2.88.2",
-    "spotify-web-api-node2": "^4.0.0"
+    "spotify-web-api-node": "^4.0.0"
   },
   "main": "server.js",
   "scripts": {
