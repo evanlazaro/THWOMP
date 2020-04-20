@@ -77,7 +77,7 @@ function msToHMS( ms ) {
   if(hours)
     return ( hours+" hr "+minutes+" min ");
   else
-    return ( minutes+":"+parseInt(seconds) );
+    return ( minutes+"m "+parseInt(seconds)+"s" );
 }
 
 function time() {
@@ -167,8 +167,8 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
         song.push( msToHMS(curr.duration_ms)); //time(ms)
         song.push( $sce.trustAsHtml('<iframe src="https://open.spotify.com/embed/track/'+curr.id+'" width="80" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>'));//to get the uri
         $scope.songs.push(song);
+        $scope.playlistDuration = msToHMS(dur);
       }
-      $scope.playlistDuration = msToHMS(dur);
     })
   }
   //weather output for navbar
