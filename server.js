@@ -225,14 +225,14 @@ var getUserPreset = function(info) {
   preset.key_confidence = info.key_confidence;
   preset.tempo = info.tempo;
   preset.tempo_confidence = info.tempo_confidence;
-  preset.instrumentalness = info.instrumentalness;
-  preset.liveness = info.liveness;
-  preset.loudness = info.loudness;
-  preset.energy = info.energy;
-  preset.speechiness = info.speechiness;
-  preset.valence = info.valence;
-  preset.danceability = info.danceability;
-  preset.acousticness = info.acousticness;
+  preset.instrumentalness = info.instrumentalness/100;
+  preset.liveness = info.liveness/100;
+  preset.loudness = info.loudness/100;
+  preset.energy = info.energy/100;
+  preset.speechiness = info.speechiness/100;
+  preset.valence = info.valence/100;
+  preset.danceability = info.danceability/100;
+  preset.acousticness = info.acousticness/100;
   return preset;
 }
 // Add new user preset to database
@@ -254,14 +254,18 @@ app.post('/recommendedPlaylist', function(req, res) {
   var seedSong = req.body.seedSong;
   // generate recommendations
   spotifyApi.searchTracks(seedSong, {limit: 1}).then(function(initialSong) {
-    // console.log(initialSong.body.tracks.items[0].id);
     spotifyApi.getRecommendations({limit: 50, seed_tracks: [initialSong.body.tracks.items[0].id],
-    min_tempo: preset.tempo-15, max_tempo: preset.tempo + 15}).then(function(recs) {
+    min_tempo: preset.tempo-15, max_tempo: preset.tempo + 15, min_danceability: preset.danceability-.3, max_danceability: preset.danceability+.3,
+    min_energy: preset.energy-.3, max_energy: preset.energy+.3, min_key: preset.key -3, max_key: preset.key+3, min_instrumentalness: preset.instrumentalness-.3,
+    max_instrumentalness: preset.instrumentalness+.3, min_liveness: preset.liveness-.3, max_liveness: preset.liveness+.3, min_acousticness: preset.acousticness-.3,
+    max_acousticness: preset.acousticness+.3, min_valence: preset.valence-.35, max_valence: preset.valence+.35 
+    }).then(function(recs) {
         // collect the uris of each song to add to playlist
-        var uriArr = [];
+        var uriArr = [initialSong.body.tracks.items[0].uri];
         for(var i=0; i < recs.body.tracks.length;i++) {
           uriArr.push(recs.body.tracks[i].uri)
         }
+        
         // create the playlist
         spotifyApi.createPlaylist(USERID, preset.name, {public: true}).then(function(info) {
           var playlistId = info.body.id;
