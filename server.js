@@ -170,14 +170,16 @@ app.get('/stats/detailed', function(req, res) {
 // Retrieve weather data from API
 app.get('/weather' , function(req, res) {
   url = ('https://geolocation-db.com/json');
- 
+
   request({
       url: url,
       json: true
   }, function (error, response, body) {
       if(!error && response.statusCode === 200) {
           weather.setAPPID(process.env.OPEN_KEY);
-          weather.setCity(body.city);
+          if (body.city){
+            weather.setCity(body.city);
+          }
           weather.setCoordinate(body.latitude, body.longitude);
           weather.setZipCode(body.postal);
           weather.setUnits('imperial');
@@ -202,6 +204,19 @@ app.get('/user_presets', function(req, res){
   })
 })
 
+app.post('/deletePreset',function(req,res){
+  let id = JSON.parse(req.body.body).id;
+  User_preset.deleteOne({ _id: id }, function (err) {
+    if (err){
+      console.log("\nError deleting preset from databse" + err);
+      res.send(false);
+    }else{
+      console.log("Successfully deleted preset.");
+      res.send(true);
+    }
+  });
+});
+
 var getUserPreset = function(info) {
   var preset = new User_preset();
   preset.user_id = info.id;
@@ -219,7 +234,6 @@ var getUserPreset = function(info) {
   preset.danceability = info.danceability;
   preset.acousticness = info.acousticness;
   return preset;
-
 }
 // Add new user preset to database
 app.post('/newUserPreset', function(req, res){
@@ -239,7 +253,7 @@ app.post('/recommendedPlaylist', function(req, res) {
   var preset = getUserPreset(req.body);
   // generate recommendations
   // TODO: change seed tracks to match some user input, and add min/max values for the varios attributes
-  spotifyApi.getRecommendations({limit: 50, seed_tracks: ['3yYk5jhpqHF6lpIyvjhTRZ'], 
+  spotifyApi.getRecommendations({limit: 50, seed_tracks: ['3yYk5jhpqHF6lpIyvjhTRZ'],
   min_tempo: preset.tempo-15, max_tempo: preset.tempo + 15}).then(function(recs) {
       // collect the uris of each song to add to playlist
       var uriArr = [];
@@ -271,4 +285,3 @@ app.use(express.static('public'));
 http.listen(3000, function(){
     console.log('\nServer up on *:3000');
 });
-
