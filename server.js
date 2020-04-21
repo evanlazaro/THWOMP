@@ -251,32 +251,40 @@ app.post('/newUserPreset', function(req, res){
 
 app.post('/recommendedPlaylist', function(req, res) {
   var preset = getUserPreset(req.body);
+  var seedSong = req.body.seedSong;
   // generate recommendations
-  // TODO: change seed tracks to match some user input, and add min/max values for the varios attributes
-  spotifyApi.getRecommendations({limit: 50, seed_tracks: ['3yYk5jhpqHF6lpIyvjhTRZ'],
-  min_tempo: preset.tempo-15, max_tempo: preset.tempo + 15}).then(function(recs) {
-      // collect the uris of each song to add to playlist
-      var uriArr = [];
-      for(var i=0; i < recs.body.tracks.length;i++) {
-        uriArr.push(recs.body.tracks[i].uri)
-      }
-      // create the playlist
-      spotifyApi.createPlaylist(USERID, preset.name, {public: true}).then(function(info) {
-        var playlistId = info.body.id;
-        // add tracks
-        spotifyApi.addTracksToPlaylist(playlistId, uriArr).then(function() {
-          console.log("Successfully added tracks!");
+  spotifyApi.searchTracks(seedSong, {limit: 1}).then(function(initialSong) {
+    // console.log(initialSong.body.tracks.items[0].id);
+    spotifyApi.getRecommendations({limit: 50, seed_tracks: [initialSong.body.tracks.items[0].id],
+    min_tempo: preset.tempo-15, max_tempo: preset.tempo + 15}).then(function(recs) {
+        // collect the uris of each song to add to playlist
+        var uriArr = [];
+        for(var i=0; i < recs.body.tracks.length;i++) {
+          uriArr.push(recs.body.tracks[i].uri)
+        }
+        // create the playlist
+        spotifyApi.createPlaylist(USERID, preset.name, {public: true}).then(function(info) {
+          var playlistId = info.body.id;
+          console.log("Successfully created playlist!");
+          // add tracks
+          spotifyApi.addTracksToPlaylist(playlistId, uriArr).then(function() {
+            console.log("Successfully added tracks!");
+          }).catch(function(err) {
+            console.log('Something went wrong when adding tracks to the playlist!', err);
+          })
+
         }).catch(function(err) {
-          console.log('Something went wrong when adding tracks to the playlist!', err);
+          console.log('Something went wrong when creating the playlist!', err);
         })
 
-      }).catch(function(err) {
-        console.log('Something went wrong when creating the playlist!', err);
-      })
+    }).catch(function(err) {
+        console.log('Something went wrong when getting recommendations!', err);
+    })
 
   }).catch(function(err) {
-      console.log('Something went3 wrong when getting recommendations!', err);
+    console.log('Something went wrong when searching for a song!', err);
   })
+
 
 });
 

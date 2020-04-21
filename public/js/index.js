@@ -410,6 +410,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
     var name = jq('#userPlaylistNameInput').val();
     jq('#userPlaylistNameModal').modal('hide');
     var data = getUserPreset(name);
+    data.seedSong = $scope.songname;
     $http.post('/recommendedPlaylist', data).then(function(res) {
       // TODO: update view/inform user that playlist was created
     })
