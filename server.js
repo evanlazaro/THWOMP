@@ -254,16 +254,14 @@ app.post('/recommendedPlaylist', function(req, res) {
   var seedSong = req.body.seedSong;
   // generate recommendations
   spotifyApi.searchTracks(seedSong, {limit: 1}).then(function(initialSong) {
-    // console.log(initialSong.body.tracks.items[0].id);
-    console.log(preset);
-    spotifyApi.getRecommendations({limit: 49, seed_tracks: [initialSong.body.tracks.items[0].id],
+    spotifyApi.getRecommendations({limit: 50, seed_tracks: [initialSong.body.tracks.items[0].id],
     min_tempo: preset.tempo-15, max_tempo: preset.tempo + 15, min_danceability: preset.danceability-.3, max_danceability: preset.danceability+.3,
     min_energy: preset.energy-.3, max_energy: preset.energy+.3, min_key: preset.key -3, max_key: preset.key+3, min_instrumentalness: preset.instrumentalness-.3,
     max_instrumentalness: preset.instrumentalness+.3, min_liveness: preset.liveness-.3, max_liveness: preset.liveness+.3, min_acousticness: preset.acousticness-.3,
     max_acousticness: preset.acousticness+.3, min_valence: preset.valence-.35, max_valence: preset.valence+.35 
     }).then(function(recs) {
         // collect the uris of each song to add to playlist
-        // var uriArr = [initialSong.body.tracks.items[0].uri];
+        var uriArr = [initialSong.body.tracks.items[0].uri];
         for(var i=0; i < recs.body.tracks.length;i++) {
           uriArr.push(recs.body.tracks[i].uri)
         }
