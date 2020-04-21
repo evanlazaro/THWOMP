@@ -64,7 +64,7 @@ for(var i = 0; i < 12; i++){
   } catch{
     //
   }
-  
+
 }
 
 // Convert ms to Hours/Minutes
@@ -223,7 +223,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
         entry.push('{\'width\': \''+obj[i].popularity*6+'px\'}');
         if(obj[i].album.images.length >=2)
           entry.push(obj[i].album.images[2].url);
-        else 
+        else
           entry.push('noimage.png');
         $scope.top.push(entry);
         var arts = data.data.data.body.previous;
@@ -235,7 +235,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
         entry.push('{\'width\': \''+arts[i].popularity*6+'px\'}');
         if(arts[i].images.length >=2)
           entry.push(arts[i].images[2].url);
-        else 
+        else
           entry.push('noimage.png');
         $scope.arts.push(entry);
       }
@@ -266,7 +266,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
       $scope.features.push(['{\'height\': \''+averages[10]*4+'px\'}','Tempo']);
     })
   }
-  //helper function for changing a knobs value 
+  //helper function for changing a knobs value
   $scope.setKnob = function(i, val) {
     knobs[i].setValue(val);
     dial_settings[i] = val;
@@ -286,6 +286,80 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
   }
   $scope.getUserPresetName = function (){
     document.getElementById('playlist-editor').style.display='none';
+  }
+
+  function makeDataPreset(preset){
+    return (preset.key + "%"
+    + preset.key_confidence + "%"
+    + preset.tempo + "%"
+    + preset.tempo_confidence + "%"
+    + preset.instrumentalness + "%"
+    + preset.liveness + "%"
+    + preset.loudness + "%"
+    + preset.energy + "%"
+    + preset.speechiness + "%"
+    + preset.valence + "%"
+    + preset.danceability + "%"
+    + preset.acousticness);
+  }
+
+  $scope.loadPresets = function(){
+    $http.get('/user_presets').then(function(data){
+      console.log(data);
+      let str = '';
+      if (data.data.length == 0){
+        str += "<p>You haven't saved any presets yet.</p>"
+      }
+      for (let i in data.data){
+        preset = data.data[i];
+        str += '<div class="up-container col-md-10 p-0" data-preset='+makeDataPreset(preset)+'>';
+        str += '  <h3 class="up-name">'+preset.name+'</h3>';
+        str += '</div>';
+        str += '<div class="col-md-2 pr-0">';
+        str += ' <button data-id="'+preset._id+'" type="button" class="btn btn-danger up-delete p-0"><i class="trash-can mx-auto far fa-trash-alt"></i></button>';
+        str += '</div>'
+      }
+      jq('#up-body').html(str);
+      jq('.up-delete').click(function(){
+        let el = jq(this)
+        let data = {
+          id: el.data("id")
+        }
+        let options = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data),
+        };
+
+        $http.post('/deletePreset', options).then(function(res) {
+          if (res.data == true){
+            el.parent().prev().remove();
+            el.parent().remove();
+          }else{
+            alert('A problem has occured when trying to delete the preset.');
+          }
+        })
+      });
+      jq('.up-container').click(function(){
+        let preset = jq(this).data("preset");
+        preset = preset.split('%');
+        console.log(preset);
+        $scope.setKnob(0,preset[0]);
+        $scope.setKnob(1,preset[1]);
+        $scope.setKnob(2,preset[2]);
+        $scope.setKnob(3,preset[3]);
+        $scope.setKnob(4,preset[4]);
+        $scope.setKnob(5,preset[5]);
+        $scope.setKnob(6,preset[6]);
+        $scope.setKnob(7,preset[7]);
+        $scope.setKnob(8,preset[8]);
+        $scope.setKnob(9,preset[9]);
+        $scope.setKnob(10,preset[10]);
+        $scope.setKnob(11,preset[11]);
+      });
+    });
   }
 
   var getUserPreset = function(name) {
@@ -327,7 +401,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
     var responseData = await response.json();
   }
   $scope.changeActive = function(id) {
-    document.getElementById($scope.currid).className = 'nav-link'; 
+    document.getElementById($scope.currid).className = 'nav-link';
     document.getElementById(id).className = 'nav-link active';
     $scope.currid = id;
   }
@@ -336,7 +410,7 @@ app.controller("mainController", ['$scope','$http','$sce', function($scope, $htt
     var name = jq('#userPlaylistNameInput').val();
     jq('#userPlaylistNameModal').modal('hide');
     var data = getUserPreset(name);
-  
+
     $http.post('/recommendedPlaylist', data).then(function(res) {
       // TODO: update view/inform user that playlist was created
     })

@@ -11,8 +11,55 @@ nav{
   z-index: 1050;
 }
 
+#loadUserPresetModal{
+  z-index: 1051;
+}
+
 #playlist-editor{
   z-index: 1050;
+}
+
+.up-body{
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.up-container{
+  text-align: center;
+  height: 80px;
+  border-radius: 1rem;
+  border: 2px solid black;
+  margin-bottom: 1.25rem;
+  padding: .75rem;
+}
+
+.up-container:hover{
+  cursor: pointer;
+  background-color: #535353;
+}
+
+.up-delete{
+  width: 100%;
+  height: 80px;
+}
+
+.close.up-delete{
+  color: red;
+}
+
+.up-name{
+  line-height: 80px;
+  color: #88FF88;
+  margin: 0;
+  margin-top: -2px;
+}
+
+.up-delete{
+  border-radius: 1rem !important;
+}
+
+.trash-can{
+  padding-left: 2px;
 }
 
 .navbar-brand {
@@ -116,11 +163,11 @@ h1 {
 .arrow-up {
   visibility: hidden;
   margin-left: 130px;
-  width: 0; 
-  height: 0; 
+  width: 0;
+  height: 0;
   border-left: 7px solid transparent;
   border-right: 7px solid transparent;
-  
+
   border-bottom: 7px solid #333333;
 }
 .dropdown-content a {
@@ -399,7 +446,7 @@ button.btn.btn-outline-success:focus{
 }
 .bar{
   background-color: #333333;
-  color: white; 
+  color: white;
   height: 60px;
   border: 1px solid black;
 }
@@ -487,7 +534,7 @@ button.btn.btn-outline-success:focus{
   vertical-align: top;
   display: inline-block;
   background-color: #333333;
-  color: white; 
+  color: white;
   width: 60px;
   border: 1px solid black;
   font-size: 1rem;
@@ -550,4 +597,3 @@ button.btn.btn-outline-success:focus{
 
   }
 }
-
