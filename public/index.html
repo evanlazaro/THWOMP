@@ -84,6 +84,17 @@
 						<input type="text" class="form-control form-control-dark-wide" id="userPlaylistNameInput" placeholder="Enter Playlist Name" />
 					</form>
 				</div>
+				<div class="modal-header">
+					<h5 class="modal-title">Song Name</h5>
+					<div type="button" ng-click="weather_view=0" class="close-container" data-dismiss="modal" aria-label="Close">
+						<span class="close-modal" aria-hidden="true">&times;</span>
+					</div>
+				</div>
+				<div class="modal-body">
+					<form>
+						<input type="text" class="form-control form-control-dark-wide" id="userSongNameInput" placeholder="Enter Song Name" />
+					</form>
+				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-outline-success" ng-click="getRecPlaylist()">Generate Playlist</button>
 				</div>
@@ -102,9 +113,6 @@
 			</div>
 			<div class="close-container">
 			<span ng-click="weather_view=0" onclick="document.getElementById('playlist-editor').style.display='none'" class="close-modal" title="Close Modal">&times;</span>
-			</div>
-			<div class="modal-body">
-				<input type="text" class="form-control form-control-dark" ng-model="songname" placeholder="Enter Song!" name="songname"/>
 			</div>
 			<div class="row modal-row text-center">
 				<div class="col-sm">
